@@ -1,0 +1,19 @@
+{
+  "name": "ember-app-kit",
+  "dependencies": {
+    "handlebars": "~1.1.2",
+    "jquery": "~1.9.1",
+    "qunit": "~1.12.0",
+    "ember-qunit": "https://github.com/rpflorence/ember-qunit.git#master",
+    "ember": "1.5.0-beta.4",
+    "ember-data": "~1.0.0-beta.7",
+    "ember-resolver": "git://github.com/stefanpenner/ember-jj-abrams-resolver.git#master",
+    "ic-ajax": "~0.3.0",
+    "ember-testing-httpRespond": "~0.1.1",
+    "ember-addons.bs_for_ember": "~0.6.1",
+    "bootstrap": "~3.1.1",
+    "fontawesome": "~4.0.3",
+    "jquery-ui": "~1.10.4",
+    "jquery-ui-ember": "~1.0.0"
+  }
+}

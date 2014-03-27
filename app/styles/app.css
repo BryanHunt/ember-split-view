@@ -1,0 +1,53 @@
+/* Put your CSS here */
+html, body {
+    margin: 20px;
+}
+
+.splitViewVertical {
+  width: 500px;
+  height: 250px;
+}
+
+.splitViewHorizontal {
+  width: 250px;
+  height: 700px;
+}
+
+.splitViewComposite {
+  width: 1024px;
+  height: 700px;
+}
+
+.left {
+  border: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  min-width: 100px;
+  padding-left: 10px;
+  margin-left: 0px;
+}
+
+.right {
+  border: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  min-width: 100px;
+}
+
+.top {
+  border: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  min-height: 100px;
+}
+
+.bottom {
+  border: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  min-height: 100px;
+}
+
+.compositeRight {
+  min-width: 100px;
+}
