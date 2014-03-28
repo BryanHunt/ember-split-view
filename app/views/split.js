@@ -10,6 +10,7 @@ export default Ember.View.extend({
     this.setupChild(this.get('rightOrBottom'));
 
     this.updateChildSizes();
+    this.updateMinWidthHeight();
   },
 
   setupChild: function(child) {
@@ -33,21 +34,32 @@ export default Ember.View.extend({
 
   updateContainmentField: function() {
     var parentOffset = this.$().offset();
-    var x1 = parentOffset.left + this.childMinLayoutWidth(this.get('leftOrTop'));
-    var y1 = parentOffset.top + this.childMinLayoutHeight(this.get('leftOrTop'));
+    var x1 = parentOffset.left + this.minLayoutWidth(this.get('leftOrTop'));
+    var y1 = parentOffset.top + this.minLayoutHeight(this.get('leftOrTop'));
 
     var x2, y2;
 
     if(this.get('isVertical')) {
-      x2 = parentOffset.left + this.$().width() - this.childMinLayoutWidth(this.get('rightOrBottom')) - this.get('sash.width');
+      x2 = parentOffset.left + this.$().width() - this.minLayoutWidth(this.get('rightOrBottom')) - this.get('sash.width');
       y2 = parentOffset.top + this.get('leftOrTop').$().height();
     } else {
       x2 = parentOffset.left + this.get('leftOrTop').$().width();
-      y2 = parentOffset.top + this.$().height() - this.childMinLayoutHeight(this.get('rightOrBottom')) - this.get('sash.width');
+      y2 = parentOffset.top + this.$().height() - this.minLayoutHeight(this.get('rightOrBottom')) - this.get('sash.width');
     }
 
     this.set('containmentField', [x1, y1, x2, y2]);
+
   }.observes('isVertical'), // this should depend on sash.width, but that causes a render error
+
+  updateMinWidthHeight: function() {
+    this.$().css("min-width", this.minLayoutWidth(this.get('leftOrTop')) + this.minLayoutWidth(this.get('rightOrBottom')) + this.get('sash.width'));
+    this.$().css("min-height", this.minLayoutHeight(this.get('leftOrTop')) + this.minLayoutHeight(this.get('rightOrBottom')) + this.get('sash.width'));
+
+    if(this.get('parentView') instanceof this.constructor) {
+      this.get('parentView').updateMinWidthHeight();
+      this.get('parentView').updateContainmentField();
+    }
+  },
 
   updateChildSizes: function() {
     this.updateChildWidths();
@@ -65,11 +77,11 @@ export default Ember.View.extend({
 
     if(this.get('isVertical')) {
       var sashWidth = this.get('sash.width');
-      leftOrTopSelector.width(Math.floor(parentWidth * this.get('sashOffset') - sashWidth / 2) - this.childTrimWidth(leftOrTop));
-      rightOrBottomSelector.width(parentWidth - this.childLayoutWidth(leftOrTop) - sashWidth - this.childTrimWidth(rightOrBottom));
+      leftOrTopSelector.width(Math.floor(parentWidth * this.get('sashOffset') - sashWidth / 2) - this.trimWidth(leftOrTop));
+      rightOrBottomSelector.width(parentWidth - this.layoutWidth(leftOrTop) - sashWidth - this.trimWidth(rightOrBottom));
     } else {
-      leftOrTopSelector.width(parentWidth - this.childTrimWidth(leftOrTop));
-      rightOrBottomSelector.width(parentWidth - this.childTrimWidth(rightOrBottom));
+      leftOrTopSelector.width(parentWidth - this.trimWidth(leftOrTop));
+      rightOrBottomSelector.width(parentWidth - this.trimWidth(rightOrBottom));
     }
     
     if(leftOrTop instanceof this.constructor)
@@ -89,12 +101,12 @@ export default Ember.View.extend({
     var rightOrBottomSelector = rightOrBottom.$();
       
     if(this.get('isVertical')) {
-      leftOrTopSelector.height(parentHeight - this.childTrimHeight(leftOrTop));
-      rightOrBottomSelector.height(parentHeight - this.childTrimHeight(rightOrBottom));
+      leftOrTopSelector.height(parentHeight - this.trimHeight(leftOrTop));
+      rightOrBottomSelector.height(parentHeight - this.trimHeight(rightOrBottom));
     } else {
       var sashHeight = this.get('sash.width');
-      leftOrTopSelector.height(Math.floor(parentHeight * this.get('sashOffset') - sashHeight / 2) - this.childTrimHeight(leftOrTop));
-      rightOrBottomSelector.height(parentHeight - this.childLayoutHeight(leftOrTop) - sashHeight - this.childTrimHeight(rightOrBottom));
+      leftOrTopSelector.height(Math.floor(parentHeight * this.get('sashOffset') - sashHeight / 2) - this.trimHeight(leftOrTop));
+      rightOrBottomSelector.height(parentHeight - this.layoutHeight(leftOrTop) - sashHeight - this.trimHeight(rightOrBottom));
     }
       
     if(leftOrTop instanceof this.constructor)
@@ -103,65 +115,66 @@ export default Ember.View.extend({
     if(rightOrBottom instanceof this.constructor)
         rightOrBottom.updateChildHeights();
   },
-  childLayoutWidth: function(child) {
-    return child.$().width() + this.childTrimWidth(child);
+
+  layoutWidth: function(view) {
+    return view.$().width() + this.trimWidth(view);
   },
   
-  childLayoutHeight: function(child) {
-    return child.$().height() + this.childTrimHeight(child);
+  layoutHeight: function(view) {
+    return view.$().height() + this.trimHeight(view);
   },
 
-  childMinLayoutWidth: function(child) {
-    var childSelector = child.$();
-    var leftMargin = parseInt(childSelector.css("margin-left"));
-    var rightMargin = parseInt(childSelector.css("margin-right"));
-    return parseInt(child.$().css('min-width')) + leftMargin + rightMargin;
+  minLayoutWidth: function(view) {
+    var selector = view.$();
+    var leftMargin = parseInt(selector.css("margin-left"));
+    var rightMargin = parseInt(selector.css("margin-right"));
+    return parseInt(view.$().css('min-width')) + leftMargin + rightMargin;
   },
       
-  childMinLayoutHeight: function(child) {
-    var childSelector = child.$();
-    var topMargin = parseInt(childSelector.css("margin-top"));
-    var bottomMargin = parseInt(childSelector.css("margin-bottom"));
-    return parseInt(child.$().css('min-height')) + topMargin + bottomMargin;
+  minLayoutHeight: function(view) {
+    var selector = view.$();
+    var topMargin = parseInt(selector.css("margin-top"));
+    var bottomMargin = parseInt(selector.css("margin-bottom"));
+    return parseInt(view.$().css('min-height')) + topMargin + bottomMargin;
   },
   
-  childTrimWidth: function(child) {
-    return this.childLeftTrimWidth(child) + this.childRightTrimWidth(child);
+  trimWidth: function(view) {
+    return this.leftTrimWidth(view) + this.rightTrimWidth(view);
   },
 
-  childLeftTrimWidth: function(child) {
-    var childSelector = child.$();
-    var leftMargin = parseInt(childSelector.css("margin-left"));
-    var leftBorderWidth = parseInt(childSelector.css("border-left-width"));
-    var leftPadding = parseInt(childSelector.css("padding-left"));
+  leftTrimWidth: function(view) {
+    var selector = view.$();
+    var leftMargin = parseInt(selector.css("margin-left"));
+    var leftBorderWidth = parseInt(selector.css("border-left-width"));
+    var leftPadding = parseInt(selector.css("padding-left"));
     return leftMargin + leftBorderWidth + leftPadding;
   },
       
-  childRightTrimWidth: function(child) {
-    var childSelector = child.$();
-    var rightPadding = parseInt(childSelector.css("padding-right"));
-    var rightBorderWidth = parseInt(childSelector.css("border-right-width"));
-    var rightMargin = parseInt(childSelector.css("margin-right"));
+  rightTrimWidth: function(view) {
+    var selector = view.$();
+    var rightPadding = parseInt(selector.css("padding-right"));
+    var rightBorderWidth = parseInt(selector.css("border-right-width"));
+    var rightMargin = parseInt(selector.css("margin-right"));
     return rightPadding + rightBorderWidth + rightMargin;
   },
       
-  childTrimHeight: function(child) {
-    return this.childTopTrimHeight(child) + this.childBottomTrimHeight(child);
+  trimHeight: function(child) {
+    return this.topTrimHeight(child) + this.bottomTrimHeight(child);
   },
 
-  childTopTrimHeight: function(child) {
-    var childSelector = child.$();
-    var topMargin = parseInt(childSelector.css("margin-top"));
-    var topBorderWidth = parseInt(childSelector.css("border-top-width"));
-    var topPadding = parseInt(childSelector.css("padding-top"));
+  topTrimHeight: function(view) {
+    var selector = view.$();
+    var topMargin = parseInt(selector.css("margin-top"));
+    var topBorderWidth = parseInt(selector.css("border-top-width"));
+    var topPadding = parseInt(selector.css("padding-top"));
     return topMargin + topBorderWidth + topPadding;
   },
 
-  childBottomTrimHeight: function(child) {
-    var childSelector = child.$();
-    var bottomPadding = parseInt(childSelector.css("padding-bottom"));
-    var bottomBorderWidth = parseInt(childSelector.css("border-bottom-width"));
-    var bottomMargin = parseInt(childSelector.css("margin-bottom"));
+  bottomTrimHeight: function(view) {
+    var selector = view.$();
+    var bottomPadding = parseInt(selector.css("padding-bottom"));
+    var bottomBorderWidth = parseInt(selector.css("border-bottom-width"));
+    var bottomMargin = parseInt(selector.css("margin-bottom"));
     return bottomPadding + bottomBorderWidth + bottomMargin;
   },
 });

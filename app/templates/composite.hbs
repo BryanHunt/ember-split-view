@@ -1,3 +1,16 @@
 {{#view "split" isVertical=true sashOffset="0.3" class="splitViewComposite"}}
-    {{view "span" viewName="leftOrTop" class="left"}}{{view "sash" viewName="sash" class="sash"}}{{#view "split" viewName="rightOrBottom" isVertical=false class="compositeRight"}}{{view "span" viewName="leftOrTop" class="top compositeChild compositeChildTop"}}{{view "sash" viewName="sash" class="sash"}}{{view "span" viewName="rightOrBottom" class="bottom compositeChild compositeChildBottom"}}{{/view}}
+
+    {{#view "span" viewName="leftOrTop" class="left"}}
+    {{/view}}{{#view "sash" viewName="sash" class="sash"}}
+    {{/view}}{{#view "split" viewName="rightOrBottom" isVertical=false sashOffset="0.7" class="compositeRight"}}
+      {{#view "split" viewName="leftOrTop" isVertical=true sashOffset="0.7" class="compositeRight"}}
+        {{#view "span" viewName="leftOrTop" class="left"}}
+        {{/view}}{{#view "sash" viewName="sash" class="sash"}}
+        {{/view}}{{#view "span" viewName="rightOrBottom" class="right"}}
+        {{/view}}
+      {{/view}}{{#view "sash" viewName="sash" class="sash"}}
+      {{/view}}{{#view "span" viewName="rightOrBottom" class="bottom compositeChild compositeChildBottom"}}
+      {{/view}}
+    {{/view}}
+
 {{/view}}
