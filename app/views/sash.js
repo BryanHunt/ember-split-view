@@ -12,7 +12,7 @@
 export default JQ.Draggable.extend({
   tagName: "span",
   width: 6,
-  offset: null,
+  position: null,
   backgroundColor: "black",
   opacity: 0.1,
 
@@ -53,7 +53,7 @@ export default JQ.Draggable.extend({
 
   jQueryUIStop: function(event) {
     this.$().css("background-color", "transparent");
-    this.set('offset', this.$().offset());
+    this.set('position', this.$().position());
 
     // You must reset the left or top (depending on orientation) of the sash to 0, or the layout is screwed big time
     // The delta is calculated to be positive when moving right or down depending on oreintation
