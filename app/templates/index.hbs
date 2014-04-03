@@ -1,16 +1,4 @@
-{{#view "split" isVertical=true sashOffset="0.3" class="splitViewComposite"}}
-
-    {{#view "span" viewName="leftOrTop" class="left"}}
-    {{/view}}{{#view "sash" viewName="sash" class="sash"}}
-    {{/view}}{{#view "split" viewName="rightOrBottom" isVertical=false sashOffset="0.7" class="compositeRight"}}
-      {{#view "split" viewName="leftOrTop" isVertical=true sashOffset="0.7" class="compositeRight"}}
-        {{#view "span" viewName="leftOrTop" class="left"}}
-        {{/view}}{{#view "sash" viewName="sash" class="sash"}}
-        {{/view}}{{#view "span" viewName="rightOrBottom" class="right"}}
-        {{/view}}
-      {{/view}}{{#view "sash" viewName="sash" class="sash"}}
-      {{/view}}{{#view "span" viewName="rightOrBottom" class="bottom compositeChild compositeChildBottom"}}
-      {{/view}}
-    {{/view}}
-
+{{#view "split" isVertical=true class="splitViewVertical"}}
+    {{#view "span" viewName="leftOrTop" class="left"}}Hello{{/view}}{{view "sash" viewName="sash" class="sash"}}{{#view "span" viewName="rightOrBottom" class="right"}}Bye{{/view}}
 {{/view}}
+

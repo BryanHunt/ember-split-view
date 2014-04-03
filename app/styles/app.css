@@ -24,6 +24,7 @@ html, body {
   border-radius: 10px;
   min-width: 100px;
   padding-left: 10px;
+  padding-top: 10px;
   margin-left: 0px;
 }
 
@@ -31,6 +32,8 @@ html, body {
   border: solid;
   border-width: 1px;
   border-radius: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
   min-width: 100px;
 }
 

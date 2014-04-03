@@ -16,6 +16,7 @@ export default Ember.View.extend({
   setupChild: function(child) {
     child.$().css("display", "inline-block");
     child.$().css("position", "relative");
+    child.$().css("line-height", "normal");
   },
 
   updateSashOffset: function() {
