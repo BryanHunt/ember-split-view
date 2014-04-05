@@ -1,7 +1,7 @@
 export default Ember.View.extend({
   isVertical: null,
   containmentField: null,
-  sahsPosition: 0.5,
+  sashOffset: 0.5,
 
   didInsertElement: function(){
     this.$().css("line-height", "0px");
@@ -19,19 +19,19 @@ export default Ember.View.extend({
     child.$().css("line-height", "normal");
   },
 
-  updateSahsPosition: function() {
-    if(!this.get('sash.position'))
+  updatesashOffset: function() {
+    if(!this.get('sash.offset'))
       return;
 
     if(this.get('isVertical')) {
-      this.set('sahsPosition', (this.get('sash.position').left + this.get('sash.width') / 2  - this.$().position().left) / this.$().width());
+      this.set('sashOffset', (this.get('sash.offset').left + this.get('sash.width') / 2  - this.$().position().left) / this.$().width());
       this.updateChildWidths();
     }
     else {
-      this.set('sahsPosition', (this.get('sash.position').top + this.get('sash.width') / 2 - this.$().position().top) / this.$().height());
+      this.set('sashOffset', (this.get('sash.offset').top + this.get('sash.width') / 2 - this.$().position().top) / this.$().height());
       this.updateChildHeights();
     }
-  }.observes('isVertical', 'sash.position', 'sash.width'),
+  }.observes('isVertical', 'sash.offset', 'sash.width'),
 
   updateContainmentField: function() {
     var parentOffset = this.$().offset();
@@ -84,7 +84,7 @@ export default Ember.View.extend({
 
     if(this.get('isVertical')) {
       var sashWidth = this.get('sash.width');
-      leftOrTopSelector.width(Math.floor(parentWidth * this.get('sahsPosition') - sashWidth / 2) - this.trimWidth(leftOrTop));
+      leftOrTopSelector.width(Math.floor(parentWidth * this.get('sashOffset') - sashWidth / 2) - this.trimWidth(leftOrTop));
       var overshoot = parentWidth - (this.layoutWidth(leftOrTop) + sashWidth + this.minLayoutWidth(rightOrBottom));
       
       if(overshoot < 0)
@@ -121,7 +121,7 @@ export default Ember.View.extend({
       rightOrBottomSelector.height(parentHeight - this.trimHeight(rightOrBottom));
     } else {
       var sashHeight = this.get('sash.width');
-      leftOrTopSelector.height(Math.floor(parentHeight * this.get('sahsPosition') - sashHeight / 2) - this.trimHeight(leftOrTop));
+      leftOrTopSelector.height(Math.floor(parentHeight * this.get('sashOffset') - sashHeight / 2) - this.trimHeight(leftOrTop));
       var overshoot = parentHeight - (this.layoutHeight(leftOrTop) + sashHeight + this.minLayoutHeight(rightOrBottom));
       
       if(overshoot < 0)

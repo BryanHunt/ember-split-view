@@ -1,0 +1,573 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"backgrou",
+				"background-clip"
+			],
+			[
+				"child",
+				"childMinHeight"
+			],
+			[
+				"ourMin",
+				"ourMinHeight"
+			],
+			[
+				"childMin",
+				"childMinWidth"
+			],
+			[
+				"min",
+				"min-height"
+			],
+			[
+				"minLay",
+				"minLayoutWidth"
+			],
+			[
+				"leftOr",
+				"leftOrTopSelector"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"update",
+				"updateChildHeights"
+			],
+			[
+				"rightOrBo",
+				"rightOrBottomChildSelector"
+			],
+			[
+				"childTrim",
+				"childTrimHeight"
+			],
+			[
+				"rightOr",
+				"rightOrBottomChild"
+			],
+			[
+				"leftOrTop",
+				"leftOrTopSelector"
+			],
+			[
+				"hack",
+				"hackInit"
+			],
+			[
+				"right",
+				"rightOrBottom"
+			],
+			[
+				"back",
+				"backgroundColor"
+			],
+			[
+				"con",
+				"containment"
+			],
+			[
+				"conta",
+				"containmentField"
+			],
+			[
+				"set",
+				"setupContainmentField"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"left",
+				"leftMinWidth"
+			],
+			[
+				"sa",
+				"sashLeft"
+			],
+			[
+				"sash",
+				"sashWidth"
+			],
+			[
+				"mouse",
+				"mouseUp"
+			],
+			[
+				"in",
+				"inline-block"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/styles/app.css",
+			"settings":
+			{
+				"buffer_size": 944,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/templates/index.hbs",
+			"settings":
+			{
+				"buffer_size": 225,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Data/bhunt/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 376,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/templates/composite.hbs",
+			"settings":
+			{
+				"buffer_size": 5567,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/templates/horizontal.hbs",
+			"settings":
+			{
+				"buffer_size": 225,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/split.js",
+			"settings":
+			{
+				"buffer_size": 7507,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/sash.js",
+			"settings":
+			{
+				"buffer_size": 2303,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Data/bhunt/Documents/Code/OpenSource/osgi-jax-rs-connector/osgi-jax-rs-connector/README.md",
+		"/Volumes/Data/bhunt/Documents/Code/OpenSource/ember-split-view/app/views/split.js",
+		"/Volumes/Data/bhunt/Documents/Code/OpenSource/split-view/app/templates.horizontal.hbs",
+		"/Volumes/Data/bhunt/Documents/Code/OpenSource/split-view/app/styles/app.css",
+		"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app/views/sash.js",
+		"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app/templates/index.hbs",
+		"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app/styles/app.css",
+		"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app/views/split.js",
+		"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app/views/span.js",
+		"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app/index.html",
+		"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/.jshintrc",
+		"/Volumes/Data/bhunt/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Volumes/Data/bhunt/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app,/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app/templates",
+			"/Volumes/Data/bhunt/Documents/Code/Springfield/ast/ui/app"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"offset",
+			"sash.offset",
+			"sashOffset",
+			"SashOffset",
+			"sashOffset",
+			"offset",
+			"updateMinWidthHeight",
+			"updateContainmentField",
+			"console",
+			"offset",
+			"Offset",
+			"offset",
+			"sashWidth",
+			"6",
+			"childMinHeight",
+			"childMinWidth",
+			"getChildTrimWidth",
+			"getChildTrimHeight",
+			"getChildRightTrimWidth",
+			"getChildLeftTrimWidth",
+			"rightChildTrimWidth",
+			"topChildTrimWidth",
+			"leftChildTrimWidth",
+			"leftChildWidth",
+			"parentWidth",
+			"right",
+			"left",
+			"rightMargin",
+			"rightBorderWidth",
+			"rightPadding",
+			"width",
+			"leftPadding",
+			"leftBorderWidth",
+			"leftMargin",
+			"rightHeight",
+			"rightWidth",
+			"leftHeight",
+			"leftWidth",
+			"rightSelector",
+			");\n",
+			"selectedIndex",
+			"left",
+			"jquery"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/styles/app.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 944,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								943,
+								943
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 30.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/templates/index.hbs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 225,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								225,
+								225
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Handlebars/Handlebars.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Volumes/Data/bhunt/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 376,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								376,
+								376
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/templates/composite.hbs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5567,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5567,
+								5567
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Handlebars/Handlebars.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 285.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/templates/horizontal.hbs",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 225,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								225
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Handlebars/Handlebars.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/views/split.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7507,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1055,
+								1055
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/views/sash.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2303,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1943,
+								1943
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "ember-split-view.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 312.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
