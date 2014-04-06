@@ -1,19 +1,32 @@
-/******************************************************************************
+/**
  * This view represents the divider between two views enclosed in a SplitView.
  * The sash can be dragged to change the size of one vew relative to the other 
  * on either side of the sash.  The sash can be either horizontal or vertical.
+ * The parentView of the sash must be a SplitView
  *
- * Properties:
- *
- * backgroundColor: the color of the sash when dragging.  Defaults to black.
- *
- * opacity: the background opacity of the sash when dragging.  Defaults to 0.1
- ******************************************************************************/
+ * @cLass SashView
+ * @extends Ember.View
+ */
 export default JQ.Draggable.extend({
   tagName: "span",
-  width: 6,
   offset: null,
+
+  /**
+   * @property {number} width - the width or height of the sash in pixels
+   * @default 6
+   */
+  width: 6,
+
+  /**
+   * @property {string} backgroundColor - the color of the sash when dragging
+   * @default black
+   */
   backgroundColor: "black",
+
+  /**
+   * @property {number} opacity - the background opacity of the sash when dragging
+   * @default 0.1
+   */
   opacity: 0.1,
 
   didInsertElement: function() {
@@ -28,10 +41,16 @@ export default JQ.Draggable.extend({
   },
 
   updateAxis: function() {
+    // axis is a property on JQ.Draggable that constrains the draggable
+    // to the specified axis
+
     this.set('axis', this.get('parentView.isVertical') ? "x" : "y");
   }.observes('parentView.isVertical'),
 
   updateContainment: function() {
+    // The containment box is calculated by the SplitView since it contains 
+    // all of the components needed to do the calculation.
+
     this.set('containment', this.get('parentView.containmentField'));
   }.observes('parentView.containmentField').on('init'),
 
@@ -55,9 +74,9 @@ export default JQ.Draggable.extend({
     this.$().css("background-color", "transparent");
     this.set('offset', this.$().offset());
 
-    // You must reset the left or top (depending on orientation) of the sash to 0, or the layout is screwed big time
-    // The delta is calculated to be positive when moving right or down depending on oreintation
-
+    // You must reset the left or top (depending on orientation)
+    // of the sash to 0, or the layout is screwed big time
+  
     if(this.get('parentView.isVertical'))
       this.$().css("left", 0);
     else

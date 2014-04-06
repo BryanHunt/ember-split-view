@@ -25,7 +25,6 @@ html, body {
   min-width: 100px;
   padding: 10px;
   margin-left: 0px;
-  vertical-align: top;
   overflow: hidden;
 }
 
@@ -35,7 +34,6 @@ html, body {
   border-radius: 10px;
   padding: 10px;
   min-width: 100px;
-  vertical-align: top;
   overflow: hidden;
 }
 
@@ -58,12 +56,10 @@ html, body {
 }
 
 .compositeRight {
-  vertical-align: top;
   min-width: 100px;
 }
 
 .compositeTop {
-  vertical-align: top;
   min-height: 100px;
 }
 
