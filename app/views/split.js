@@ -12,7 +12,7 @@
  *
  * Vertical SplitView example:
  *
- * ```html
+ * ```handlebars
  * {{#view "split" isVertical=true}}
  *   {{#view "span" viewName="leftOrTop"}}
  *     Content of the left view here.
@@ -24,7 +24,7 @@
  *
  * Horizontal SplitView example:
  *
- * ```html
+ * ```handlebars
  * {{#view "split" isVertical=false}}
  *   {{#view "span" viewName="leftOrTop"}}
  *     Content of the top view here.
