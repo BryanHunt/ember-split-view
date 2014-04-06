@@ -4,12 +4,12 @@ html, body {
 }
 
 .splitViewVertical {
-  width: 500px;
-  height: 250px;
+  width: 1000px;
+  height: 500px;
 }
 
 .splitViewHorizontal {
-  width: 250px;
+  width: 1000px;
   height: 700px;
 }
 
