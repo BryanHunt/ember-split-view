@@ -24,11 +24,11 @@ export default Ember.View.extend({
       return;
 
     if(this.get('isVertical')) {
-      this.set('sashOffset', (this.get('sash.offset').left + this.get('sash.width') / 2  - this.$().position().left) / this.$().width());
+      this.set('sashOffset', (this.get('sash.offset').left + this.get('sash.width') / 2  - this.$().offset().left) / this.$().width());
       this.updateChildWidths();
     }
     else {
-      this.set('sashOffset', (this.get('sash.offset').top + this.get('sash.width') / 2 - this.$().position().top) / this.$().height());
+      this.set('sashOffset', (this.get('sash.offset').top + this.get('sash.width') / 2 - this.$().offset().top) / this.$().height());
       this.updateChildHeights();
     }
   }.observes('isVertical', 'sash.offset', 'sash.width'),
