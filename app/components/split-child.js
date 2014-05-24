@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   didInsertElement: function() {
     this.$().css("position", "absolute");
     this.updateSize();
-    this.updateOrientation();
+    this.updateFixedSide();
     this.updateMovableSide();
   },
 

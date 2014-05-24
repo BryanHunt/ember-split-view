@@ -6,7 +6,7 @@ export default SplitChild.extend({
     this.set('parentView.left', this);
   },
 
-  updateOrientation: function() {
+  updateFixedSide: function() {
     if(this.get('isVertical'))
       this.$().css("left", "0");
     else
