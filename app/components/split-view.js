@@ -54,7 +54,7 @@ export default Ember.Component.extend({
     this.$().width(this.get('width'));
   }.observes('width'),
 
-  setHeight: function() {
+  updateHeight: function() {
     this.$().height(this.get('height'));
   }.observes('height'),
 
