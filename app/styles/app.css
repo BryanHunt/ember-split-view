@@ -6,61 +6,37 @@ html, body {
 .splitViewVertical {
   width: 1000px;
   height: 500px;
+  position: relative;
 }
 
 .splitViewHorizontal {
   width: 1000px;
   height: 700px;
+  position: relative;
 }
 
-.splitViewComposite {
-  width: 1024px;
-  height: 700px;
-}
-
-.left {
+.child {
   border: solid;
   border-width: 1px;
   border-radius: 10px;
-  min-width: 100px;
   padding: 10px;
-  margin-left: 0px;
   overflow: hidden;
 }
 
-.right {
-  border: solid;
-  border-width: 1px;
-  border-radius: 10px;
-  padding: 10px;
-  min-width: 100px;
-  overflow: hidden;
+.vertical {
+  min-width: 100px;  
 }
 
-.top {
-  border: solid;
-  border-width: 1px;
-  border-radius: 10px;
-  padding: 10px;
+.horizontal {
   min-height: 100px;
-  overflow: hidden;
-}
-
-.bottom {
-  border: solid;
-  border-width: 1px;
-  border-radius: 10px;
-  padding: 10px;
-  min-height: 100px;
-  overflow: hidden;
 }
 
 .compositeRight {
-  min-width: 100px;
+  min-width: 206px;
 }
 
-.compositeTop {
-  min-height: 100px;
+.compositeBottom {
+  min-height: 206px;
 }
 
 .intro {

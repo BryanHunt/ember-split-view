@@ -1,0 +1,11 @@
+{{#split-view isVertical=true class="splitViewVertical"}}
+  {{split-left class="child vertical"}}
+  {{split-sash class="sash"}}
+  {{#split-right class="compositeRight"}}
+    {{#split-view isVertical=true}}
+      {{split-left class="child vertical"}}
+      {{split-sash class="sash"}}
+      {{split-right class="child vertical"}}
+    {{/split-view}}
+  {{/split-right}}
+{{/split-view}}

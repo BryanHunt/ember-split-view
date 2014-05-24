@@ -4,6 +4,7 @@ Router.map(function() {
   this.resource('vertical');
   this.route('horizontal');
   this.route('verticalComposite');
+  this.route('horizontalComposite');
   this.route('composite');
 });
 
