@@ -1,6 +1,6 @@
 export default Ember.Component.extend({
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
-  sashWidthPercentage: Ember.computed.alias('parentView.sashWidthPercentage'),
+  sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
   isVertical: Ember.computed.alias('parentView.isVertical'),
   childSplitView: null,
 
@@ -21,19 +21,21 @@ export default Ember.Component.extend({
     }
   }.observes('isVertical'),
 
-  updateRight: function() {
+  updateChildSplitView: function() {
     var childSplit = this.get('childSplitView');
 
-    if(this.get('isVertical')) {
+    if(childSplit) {
+      childSplit.set('width', this.$().width());
+      childSplit.set('height', this.$().height());
+    }
+  }.observes('childSplitView'),
+
+  updateRight: function() {
+    if(this.get('isVertical'))
       this.$().css("right", (100 - this.get('splitPercentage') + this.get('sashWidthPercentage') / 2) + "%");
-      
-      if(childSplit)
-        childSplit.setWidth(this.$().width());
-    } else {
+    else
       this.$().css("bottom", (100 - this.get('splitPercentage') + this.get('sashWidthPercentage') / 2) + "%");      
 
-      if(childSplit)
-        childSplit.setHeight(this.$().height());
-    }
+    this.updateChildSplitView();
   }.observes('sashWidthPercentage', 'splitPercentage', 'isVertical')
 });

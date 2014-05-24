@@ -8,8 +8,8 @@
  * @extends Ember.View
  */
 export default Ember.Component.extend({
-  width: Ember.computed.alias('parentView.sashWidth'),
-  widthPercentage: Ember.computed.alias('parentView.sashWidthPercentage'),
+  width: 6,
+  widthPercentage: null,
   isVertical: Ember.computed.alias('parentView.isVertical'),
   isDragging: Ember.computed.alias('parentView.isDragging'),
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),  
@@ -32,6 +32,7 @@ export default Ember.Component.extend({
     this.$().css("position", "absolute");
     this.$().css("opacity", this.get('opacity'));
 
+    this.updateWidth();
     this.updatePosition();
     this.updateOrientation();
   },
@@ -42,6 +43,13 @@ export default Ember.Component.extend({
     else
       this.$().css("top", (this.get('splitPercentage') - this.get('widthPercentage') / 2) + "%");
   }.observes('splitPercentage', 'widthPercentage', 'isVertical'),
+
+  updateWidth: function() {
+    if(this.get('isVertical'))
+      this.set('widthPercentage', this.get('width') / this.get('parentView.width') * 100);
+    else
+      this.set('widthPercentage', this.get('width') / this.get('parentView.height') * 100);     
+  }.observes('isVertical', 'width', 'parentView.width', 'parentView.height'),
 
   updateOrientation: function() {
     if(this.get('isVertical')) {

@@ -4,12 +4,6 @@
  * view, and a right or bottom view.  The sash may be dragged to change the
  * relative width or height of the child views.
  *
- * The SplitView expects the three child views to be named: leftOrTop, sash, and
- * rightOrBottom.  When you construct your template, you may not have any whitespace
- * between the child view declarations.  Adding whitespace causes the browser to
- * layout the elements with additional pixels between them and that throws off
- * all of the calculations needed to resize the children when the sash moves.
- *
  * Vertical SplitView example:
  *
  * ```handlebars
@@ -34,8 +28,8 @@
  * {{/view}}
  * ```
  * 
- * @cLass SplitView
- * @extends Ember.View
+ * @cLass SplitViewComponent
+ * @extends Ember.Component
  */
 export default Ember.Component.extend({
   /**
@@ -43,52 +37,33 @@ export default Ember.Component.extend({
    * @default true
    */
   isVertical: true,
-  isDragging: false,
-
     
-  sashWidth: 6,
   splitPercentage: 50,
-  newSplitPercentage: 50,
 
-  width: null,
-  height: null,
+  isDragging: false,
+  width: 0,
+  height: 0,
 
   didInsertElement: function(){
-    this.updateSashWidth();
     this.set('parentView.childSplitView', this);
+    this.set('width', this.$().width());
+    this.set('height', this.$().height());
   },
 
-  setWidth: function(width) {
-    this.$().width(width);
+  updateWidth: function() {
+    this.$().width(this.get('width'));
+  }.observes('width'),
 
-    if(this.get('isVertical')) {
-      this.updateSashWidth();
-      this.constrainSplit();
-    }
-  },
-
-  setHeight: function(height) {
-    this.$().height(height);
-
-    if(!this.get('isVertical')) {
-      this.updateSashWidth();
-      this.constrainSplit();
-    }
-  },
+  setHeight: function() {
+    this.$().height(this.get('height'));
+  }.observes('height'),
 
   constrainSplit: function() {
     if(this.get('left') && this.get('splitPercentage') < this.minChildPercentage(this.get('left')))
       this.set('splitPercentage',this.minChildPercentage(this.get('left')));
     else if (this.get('right') && this.get('splitPercentage') > 100 - this.minChildPercentage(this.get('right')))
       this.set('splitPercentage', 100 - this.minChildPercentage(this.get('right')));
-  },
-
-  updateSashWidth: function() {
-    if(this.get('isVertical'))
-      this.set('sashWidthPercentage', this.get('sashWidth') / this.$().width() * 100);
-    else
-      this.set('sashWidthPercentage', this.get('sashWidth') / this.$().height() * 100);     
-  }.observes('isVertical'),
+  }.observes('sash.widthPercentage'),
 
   mouseUp: function() {
     this.set('isDragging', false);
@@ -115,8 +90,8 @@ export default Ember.Component.extend({
 
   minChildPercentage: function(view) {
     if(this.get('isVertical'))
-      return parseInt(view.$().css("min-width")) / this.$().width() * 100 + this.get('sashWidthPercentage') / 2;
+      return parseInt(view.$().css("min-width")) / this.$().width() * 100 + this.get('sash.widthPercentage') / 2;
     else
-      return parseInt(view.$().css("min-height")) / this.$().height() * 100 + this.get('sashWidthPercentage') / 2;
+      return parseInt(view.$().css("min-height")) / this.$().height() * 100 + this.get('sash.widthPercentage') / 2;
   },
 });
