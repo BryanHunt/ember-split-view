@@ -9,8 +9,6 @@ export default Ember.Component.extend({
   didInsertElement: function() {
     this.$().css("position", "absolute");
     this.updateSize();
-    this.updateFixedSide();
-    this.updateMovableSide();
   },
 
   initChildSplitView: function() {
@@ -26,7 +24,7 @@ export default Ember.Component.extend({
 
   updateFixedSide: function() {
     this.$().css(this.get('fixedSide'), "0");
-  }.observes('isVertical'),
+  }.observes('fixedSide'),
 
   updateMovableSide: function() {
     var percent;
@@ -38,7 +36,7 @@ export default Ember.Component.extend({
 
     this.$().css(this.get('movableSide'), percent + "%");
     this.updateChildSplitView();
-  }.observes('sashWidthPercentage', 'splitPercentage', 'isVertical'),
+  }.observes('sashWidthPercentage', 'splitPercentage', 'movableSide'),
 
   updateChildSplitView: function() {
     var childSplit = this.get('childSplitView');

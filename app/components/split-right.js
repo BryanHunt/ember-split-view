@@ -2,9 +2,9 @@ import SplitChild from 'ember-split-view/components/split-child';
 
 export default SplitChild.extend({
   didInsertElement: function() {
-    this.initSides();
     this._super();
     this.set('parentView.right', this);
+    this.initSides();
   },
 
   initSides: function() {
