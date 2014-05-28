@@ -26,7 +26,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.rootURL = '/ember-split-view/';
+    ENV.location = 'hash';
   }
 
   return ENV;
