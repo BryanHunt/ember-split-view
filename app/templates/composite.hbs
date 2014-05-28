@@ -1,11 +1,11 @@
 {{#split-view isVertical=true splitPercentage=30 class="splitViewVertical"}}
-  {{split-left class="child vertical"}}
+  {{split-child class="child vertical"}}
   {{split-sash class="sash"}}
-  {{#split-right class="compositeRight"}}
+  {{#split-child class="compositeRight"}}
     {{#split-view isVertical=false}}
-      {{split-left class="child horizontal"}}
+      {{split-child class="child horizontal"}}
       {{split-sash class="sash"}}
-      {{split-right class="child horizontal"}}
+      {{split-child class="child horizontal"}}
     {{/split-view}}
-  {{/split-right}}
+  {{/split-child}}
 {{/split-view}}

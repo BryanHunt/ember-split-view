@@ -40,6 +40,7 @@ export default Ember.Component.extend({
     
   splitPercentage: 50,
 
+  childViews: null,
   isDragging: false,
   width: 0,
   height: 0,
@@ -48,7 +49,32 @@ export default Ember.Component.extend({
     this.set('parentView.childSplitView', this);
     this.set('width', this.$().width());
     this.set('height', this.$().height());
+    this.set('childViews', Ember.A());
   },
+
+  addChildView: function(child) {
+    this.get('childViews').addObject(child);
+
+    if(this.get('childViews').length === 2)
+      this.updateOrientation();
+  },
+
+  updateOrientation: function() {
+    var left = this.get('childViews').objectAt(0);
+    var right = this.get('childViews').objectAt(1);
+
+    if(this.get('isVertical')) {
+      left.set('fixedSide', 'left');
+      left.set('movableSide', 'right');
+      right.set('fixedSide', 'right');
+      right.set('movableSide', 'left');
+    } else {
+      left.set('fixedSide', 'top');
+      left.set('movableSide', 'bottom');
+      right.set('fixedSide', 'bottom');
+      right.set('movableSide', 'top');
+    }
+  }.observes('isVertical'),
 
   updateWidth: function() {
     this.$().width(this.get('width'));
@@ -59,10 +85,22 @@ export default Ember.Component.extend({
   }.observes('height'),
 
   constrainSplit: function() {
-    if(this.get('left') && this.get('splitPercentage') < this.minChildPercentage(this.get('left')))
-      this.set('splitPercentage',this.minChildPercentage(this.get('left')));
-    else if (this.get('right') && this.get('splitPercentage') > 100 - this.minChildPercentage(this.get('right')))
-      this.set('splitPercentage', 100 - this.minChildPercentage(this.get('right')));
+    var left = this.get('childViews').objectAt(0);
+    var right = this.get('childViews').objectAt(1);
+
+    if(left) {
+      var minLeftPercentage = this.minChildPercentage(left);
+
+      if(this.get('splitPercentage') < minLeftPercentage)
+        this.set('splitPercentage', minLeftPercentage);
+    }
+    
+    if (right) {
+      var minRightPercentage = 100 - this.minChildPercentage(right);
+
+      if(this.get('splitPercentage') > minRightPercentage)
+        this.set('splitPercentage', minRightPercentage);
+    } 
   }.observes('sash.widthPercentage'),
 
   mouseUp: function() {
