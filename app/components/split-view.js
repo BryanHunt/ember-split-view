@@ -7,25 +7,29 @@
  * Vertical SplitView example:
  *
  * ```handlebars
- * {{#view "split" isVertical=true}}
- *   {{#view "span" viewName="leftOrTop"}}
+ * {{#split-view isVertical=true}}
+ *   {{#split-child}}
  *     Content of the left view here.
- *   {{/view}}{{view "sash" viewName="sash"}}{{#view "span" viewName="rightOrBottom"}}
+ *   {{/split-child}}
+ *   {{split-sash"}}
+ *   {{#split-child}}
  *     Content of the right view here.
- *   {{/view}}
- * {{/view}}
+ *   {{/split-child}}
+ * {{/split-view}}
  * ```
  *
  * Horizontal SplitView example:
  *
  * ```handlebars
- * {{#view "split" isVertical=false}}
- *   {{#view "span" viewName="leftOrTop"}}
- *     Content of the top view here.
- *   {{/view}}{{view "sash" viewName="sash"}}{{#view "span" viewName="rightOrBottom"}}
- *     Content of the bottom view here.
- *   {{/view}}
- * {{/view}}
+ * {{#split-view isVertical=false}}
+ *   {{#split-child}}
+ *     Content of the left view here.
+ *   {{/split-child}}
+ *   {{split-sash"}}
+ *   {{#split-child}}
+ *     Content of the right view here.
+ *   {{/split-child}}
+ * {{/split-view}}
  * ```
  * 
  * @cLass SplitViewComponent
@@ -38,6 +42,10 @@ export default Ember.Component.extend({
    */
   isVertical: true,
     
+  /**
+   * @property {Number} splitPercentage - the percentage of the split between 0 and 100
+   * @default 50
+   */
   splitPercentage: 50,
 
   childViews: null,

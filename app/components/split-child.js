@@ -2,6 +2,7 @@ export default Ember.Component.extend({
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
   sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
   isVertical: Ember.computed.alias('parentView.isVertical'),
+  
   childSplitView: null,
   fixedSide: null,
   movableSide: null,
