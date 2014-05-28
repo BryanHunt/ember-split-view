@@ -60,19 +60,19 @@ export default Ember.Component.extend({
   },
 
   updateOrientation: function() {
-    var left = this.get('childViews').objectAt(0);
-    var right = this.get('childViews').objectAt(1);
+    var leftOrTop = this.get('childViews').objectAt(0);
+    var rightOrBottom = this.get('childViews').objectAt(1);
 
     if(this.get('isVertical')) {
-      left.set('fixedSide', 'left');
-      left.set('movableSide', 'right');
-      right.set('fixedSide', 'right');
-      right.set('movableSide', 'left');
+      leftOrTop.set('fixedSide', 'left');
+      leftOrTop.set('movableSide', 'right');
+      rightOrBottom.set('fixedSide', 'right');
+      rightOrBottom.set('movableSide', 'left');
     } else {
-      left.set('fixedSide', 'top');
-      left.set('movableSide', 'bottom');
-      right.set('fixedSide', 'bottom');
-      right.set('movableSide', 'top');
+      leftOrTop.set('fixedSide', 'top');
+      leftOrTop.set('movableSide', 'bottom');
+      rightOrBottom.set('fixedSide', 'bottom');
+      rightOrBottom.set('movableSide', 'top');
     }
   }.observes('isVertical'),
 
@@ -85,21 +85,21 @@ export default Ember.Component.extend({
   }.observes('height'),
 
   constrainSplit: function() {
-    var left = this.get('childViews').objectAt(0);
-    var right = this.get('childViews').objectAt(1);
+    var leftOrTop = this.get('childViews').objectAt(0);
+    var rightOrBottom = this.get('childViews').objectAt(1);
 
-    if(left) {
-      var minLeftPercentage = this.minChildPercentage(left);
+    if(leftOrTop) {
+      var minLeftOrTopPercentage = this.minChildPercentage(leftOrTop);
 
-      if(this.get('splitPercentage') < minLeftPercentage)
-        this.set('splitPercentage', minLeftPercentage);
+      if(this.get('splitPercentage') < minLeftOrTopPercentage)
+        this.set('splitPercentage', minLeftOrTopPercentage);
     }
     
-    if (right) {
-      var minRightPercentage = 100 - this.minChildPercentage(right);
+    if (rightOrBottom) {
+      var minRightOrBottomPercentage = 100 - this.minChildPercentage(rightOrBottom);
 
-      if(this.get('splitPercentage') > minRightPercentage)
-        this.set('splitPercentage', minRightPercentage);
+      if(this.get('splitPercentage') > minRightOrBottomPercentage)
+        this.set('splitPercentage', minRightOrBottomPercentage);
     } 
   }.observes('sash.widthPercentage'),
 
