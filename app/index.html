@@ -3,22 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>EmberSplitApp</title>
+    <title>EmberSplitView</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{BASE_TAG}}
-    
+
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/ember-split-view.css">
   </head>
   <body>
     <script>
-      window.ENV = {{ENV}};
+      window.EmberSplitViewENV = {{ENV}};
+      window.EmberENV = window.EmberSplitViewENV.EmberENV;
     </script>
+    <script src="assets/vendor.js"></script>
     <script src="assets/ember-split-view.js"></script>
     <script>
-      window.EmberSplitView = require('ember-split-view/app')['default'].create(ENV.APP);
+      window.EmberSplitView = require('ember-split-view/app')['default'].create(EmberSplitViewENV.APP);
     </script>
   </body>
 </html>

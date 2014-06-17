@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 /**
  * This class represents a view that is split either vertically or horizontally.
  * The split view is composed of three child views: a left or top view, a sash

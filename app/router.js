@@ -1,6 +1,7 @@
+import Ember from 'ember';
+
 var Router = Ember.Router.extend({
-  rootURL: ENV.rootURL,
-  location: ENV.location
+  location: EmberSplitViewENV.locationType
 });
 
 Router.map(function() {

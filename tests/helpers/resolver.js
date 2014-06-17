@@ -3,7 +3,7 @@ import Resolver from 'ember/resolver';
 var resolver = Resolver.create();
 
 resolver.namespace = {
-  modulePrefix: 'ember-split-app'
+  modulePrefix: 'ember-split-view'
 };
 
 export default resolver;

@@ -1,7 +1,7 @@
 /* global require */
 
-var Application = require('ember-split-app/app')['default'];
-var Router = require('ember-split-app/router')['default'];
+var Application = require('ember-split-view/app')['default'];
+var Router = require('ember-split-view/router')['default'];
 
 export default function startApp(attrs) {
   var App;

@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 /**
  * This view represents the divider between two views enclosed in a SplitView.
  * The sash can be dragged to change the size of one vew relative to the other 

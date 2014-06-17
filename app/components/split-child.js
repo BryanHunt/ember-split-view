@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.Component.extend({
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
   sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
