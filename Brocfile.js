@@ -30,11 +30,11 @@ var app = new EmberApp({
 // along with the exports of each module as its value.
 
 app.import('vendor/bootstrap/dist/css/bootstrap.css');
-app.import('vendor/ember-data/ember-data.js');
 app.import('vendor/bootstrap/dist/js/bootstrap.js');
 app.import('vendor/ember-addons.bs_for_ember/dist/js/bs-core.max.js');
 app.import('vendor/ember-addons.bs_for_ember/dist/js/bs-nav.max.js');
 
+/*
 app.import({
   development: 'vendor/ember-data/ember-data.js',
   production:  'vendor/ember-data/ember-data.prod.js'
@@ -53,6 +53,6 @@ app.import('vendor/ic-ajax/dist/named-amd/main.js', {
     'request',
   ]
 });
-
+*/
 
 module.exports = app.toTree();
