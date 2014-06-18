@@ -3,6 +3,11 @@ html, body {
     margin: 20px;
 }
 
+pre {
+  border: none;
+  background-color: inherit;
+}
+
 .splitViewVertical {
   width: 1000px;
   height: 500px;
