@@ -1,9 +1,16 @@
 /* global require, module */
 
+var mergeTrees = require('broccoli-merge-trees');
+
+var appTree  = mergeTrees(['app', 'app-addon'], { overwrite: true });
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
   name: require('./package.json').name,
+
+  trees: {
+    app: appTree
+  },
 
   // for some large projects, you may want to uncomment this (for now)
   es3Safe: true,
@@ -33,26 +40,5 @@ app.import('vendor/bootstrap/dist/css/bootstrap.css');
 app.import('vendor/bootstrap/dist/js/bootstrap.js');
 app.import('vendor/ember-addons.bs_for_ember/dist/js/bs-core.max.js');
 app.import('vendor/ember-addons.bs_for_ember/dist/js/bs-nav.max.js');
-
-/*
-app.import({
-  development: 'vendor/ember-data/ember-data.js',
-  production:  'vendor/ember-data/ember-data.prod.js'
-}, {
-  'ember-data': [
-    'default'
-  ]
-});
-
-app.import('vendor/ic-ajax/dist/named-amd/main.js', {
-  'ic-ajax': [
-    'default',
-    'defineFixture',
-    'lookupFixture',
-    'raw',
-    'request',
-  ]
-});
-*/
 
 module.exports = app.toTree();
