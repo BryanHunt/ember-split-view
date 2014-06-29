@@ -2,6 +2,7 @@ Ember Split View
 ================
 
 See it in action: http://bryanhunt.github.io/ember-split-view
+The demo app is here: https://github.com/BryanHunt/ember-split-view-demo
 
 ### Installation
 
