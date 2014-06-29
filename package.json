@@ -1,6 +1,6 @@
 {
   "name": "ember-split-view",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "ember-addon-main": "lib/ember-split-view.js",
   "directories": {
     "doc": "doc",
