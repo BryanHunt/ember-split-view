@@ -102,8 +102,9 @@ export default Ember.Component.extend({
     if(leftOrTop) {
       var minLeftOrTopPercentage = this.minChildPercentage(leftOrTop);
 
-      if(this.get('splitPercentage') < minLeftOrTopPercentage)
+      if(this.get('splitPercentage') < minLeftOrTopPercentage) {
         this.set('splitPercentage', minLeftOrTopPercentage);
+      }
     }
     
     if (rightOrBottom) {
