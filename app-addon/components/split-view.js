@@ -65,8 +65,9 @@ export default Ember.Component.extend({
   addChildView: function(child) {
     this.get('childViews').addObject(child);
 
-    if(this.get('childViews').length === 2)
+    if(this.get('childViews').length === 2) {
       this.updateOrientation();
+    }
   },
 
   updateOrientation: function() {
@@ -108,8 +109,9 @@ export default Ember.Component.extend({
     if (rightOrBottom) {
       var minRightOrBottomPercentage = 100 - this.minChildPercentage(rightOrBottom);
 
-      if(this.get('splitPercentage') > minRightOrBottomPercentage)
+      if(this.get('splitPercentage') > minRightOrBottomPercentage) {
         this.set('splitPercentage', minRightOrBottomPercentage);
+      }
     } 
   }.observes('sash.widthPercentage'),
 
@@ -118,8 +120,9 @@ export default Ember.Component.extend({
   },
 
   mouseMove: function(event) {
-    if(!this.get('isDragging'))
+    if(!this.get('isDragging')) {
       return;
+    }
 
     var posInParent;
     var percentage;
@@ -137,9 +140,10 @@ export default Ember.Component.extend({
   },
 
   minChildPercentage: function(view) {
-    if(this.get('isVertical'))
+    if(this.get('isVertical')) {
       return parseInt(view.$().css("min-width")) / this.$().width() * 100 + this.get('sash.widthPercentage') / 2;
-    else
+    } else {
       return parseInt(view.$().css("min-height")) / this.$().height() * 100 + this.get('sash.widthPercentage') / 2;
-  },
+    }
+  }
 });

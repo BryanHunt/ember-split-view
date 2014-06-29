@@ -20,10 +20,11 @@ export default Ember.Component.extend({
   }.observes('childSplitView'),
 
   updateSize: function() {
-    if(this.get('isVertical'))
+    if(this.get('isVertical')) {
       this.$().css("height", "100%");
-    else
+    } else {
       this.$().css("width", "100%");
+    }
   }.observes('isVertical'),
 
   updateFixedSide: function() {
@@ -33,10 +34,11 @@ export default Ember.Component.extend({
   updateMovableSide: function() {
     var percent;
 
-    if(this.get('movableSide') === "left" || this.get('movableSide') === "top")
+    if(this.get('movableSide') === "left" || this.get('movableSide') === "top") {
       percent = this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
-    else
+    } else {
       percent = 100 - this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
+    }
 
     this.$().css(this.get('movableSide'), percent + "%");
     this.updateChildSplitView();

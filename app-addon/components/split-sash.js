@@ -40,17 +40,19 @@ export default Ember.Component.extend({
   },
 
   updatePosition: function() {
-    if(this.get('isVertical'))
+    if(this.get('isVertical')) {
       this.$().css("left", (this.get('splitPercentage') - this.get('widthPercentage') / 2) + "%");
-    else
+    } else {
       this.$().css("top", (this.get('splitPercentage') - this.get('widthPercentage') / 2) + "%");
+    }
   }.observes('splitPercentage', 'widthPercentage', 'isVertical'),
 
   updateWidth: function() {
-    if(this.get('isVertical'))
+    if(this.get('isVertical')) {
       this.set('widthPercentage', this.get('width') / this.get('parentView.width') * 100);
-    else
+    } else {
       this.set('widthPercentage', this.get('width') / this.get('parentView.height') * 100);     
+    }
   }.observes('isVertical', 'width', 'parentView.width', 'parentView.height'),
 
   updateOrientation: function() {
@@ -66,10 +68,11 @@ export default Ember.Component.extend({
   }.observes('isVertical', 'width'),
 
   updateBackground: function() {
-    if(this.get('parentView.isDragging'))
+    if(this.get('parentView.isDragging')) {
       this.$().css("background-color", this.get('sashBackgroundColor'));
-    else
+    } else {
       this.$().css("background-color", "transparent");
+    }
   }.observes('isDragging'),
 
   mouseDown: function(event) {
