@@ -3,6 +3,43 @@ Ember Split View
 
 You can see a demo at: http://bryanhunt.github.io/ember-split-view
 
+### Installation
+
+If you are using ember-cli, you can install as an addon.
+
+```
+npm install --save-dev ember-split-view
+```
+
+### Examples
+Vertical SplitView example:
+
+```handlebars
+{{#split-view isVertical=true}}
+  {{#split-child}}
+    Content of the left view here.
+  {{/split-child}}
+  {{split-sash}}
+  {{#split-child}}
+    Content of the right view here.
+  {{/split-child}}
+{{/split-view}}
+```
+
+Horizontal SplitView example:
+
+```handlebars
+{{#split-view isVertical=false}}
+  {{#split-child}}
+    Content of the top view here.
+  {{/split-child}}
+  {{split-sash}}
+  {{#split-child}}
+    Content of the bottom view here.
+  {{/split-child}}
+{{/split-view}}
+```
+ 
 ### Donating
 
 All donations will support this project and keep the developer supplied with Reese's Minis.
