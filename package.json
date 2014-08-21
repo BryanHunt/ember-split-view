@@ -1,7 +1,7 @@
 {
   "name": "ember-split-view",
-  "version": "0.1.0",
-  "ember-addon-main": "lib/ember-split-view.js",
+  "version": "0.2.0",
+  "ember-addon": {"main": "lib/ember-split-view.js"},
   "directories": {
     "doc": "doc",
     "test": "test"
@@ -23,6 +23,6 @@
   "author": "Bryan Hunt",
   "license": "MIT",
   "devDependencies": {
-    "ember-cli": "0.0.37"
+    "ember-cli": "0.0.40"
   }
 }
