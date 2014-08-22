@@ -32,6 +32,10 @@ export default Ember.Component.extend({
   }.observes('fixedSide'),
 
   updateMovableSide: function() {
+    if(!this.get('movableSide')) {
+      return;
+    }
+
     var percent;
 
     if(this.get('movableSide') === "left" || this.get('movableSide') === "top") {
