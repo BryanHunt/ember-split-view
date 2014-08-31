@@ -4,49 +4,47 @@ export default Ember.Component.extend({
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
   sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
   isVertical: Ember.computed.alias('parentView.isVertical'),
-  
+  attributeBindings: ['style'],
+
   childSplitView: null,
   fixedSide: null,
   movableSide: null,
 
   didInsertElement: function() {
-    this.$().css("position", "absolute");
-    this.updateSize();
     this.get('parentView').addChildView(this);
   },
 
-  initChildSplitView: function() {
-    this.updateChildSplitView();
-  }.observes('childSplitView'),
+  style: function() {
+    var s = "position: absolute;";
 
-  updateSize: function() {
     if(this.get('isVertical')) {
-      this.$().css("height", "100%");
+      s += "height:100%;";
     } else {
-      this.$().css("width", "100%");
+      s += "width:100%;";
     }
-  }.observes('isVertical'),
 
-  updateFixedSide: function() {
-    this.$().css(this.get('fixedSide'), "0");
-  }.observes('fixedSide'),
+    if(this.get('fixedSide')) {
+      s += this.get('fixedSide') + ":0px;"
+    }
 
-  updateMovableSide: function() {
+    if(this.get('movableSide')) {
+      s += this.get('movableSide') + ":" + this.get('movablePercent') + "%";
+    }
+
+    return s;
+  }.property('isVertical', 'fixedSide', 'movablePercent'),
+
+  movablePercent: function() {
     if(!this.get('movableSide')) {
       return;
     }
 
-    var percent;
-
     if(this.get('movableSide') === "left" || this.get('movableSide') === "top") {
-      percent = this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
+      return this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
     } else {
-      percent = 100 - this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
+      return 100 - this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
     }
-
-    this.$().css(this.get('movableSide'), percent + "%");
-    this.updateChildSplitView();
-  }.observes('sashWidthPercentage', 'splitPercentage', 'movableSide'),
+  }.property('sashWidthPercentage', 'splitPercentage', 'movableSide'),
 
   updateChildSplitView: function() {
     var childSplit = this.get('childSplitView');
@@ -54,6 +52,7 @@ export default Ember.Component.extend({
     if(childSplit) {
       childSplit.set('width', this.$().width());
       childSplit.set('height', this.$().height());
+      window.console.log("updateChildSplitView  width: " + childSplit.get('width') + "  height: " + childSplit.get('height'));
     }
-  }
+  }.observes('childSplitView', 'style')
 });
