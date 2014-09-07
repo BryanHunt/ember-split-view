@@ -15,6 +15,7 @@ export default Ember.Component.extend({
   isVertical: Ember.computed.alias('parentView.isVertical'),
   isDragging: Ember.computed.alias('parentView.isDragging'),
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),  
+  attributeBindings: ['style'],
 
   /**
    * @property {string} sashBackgroundColor - the color of the sash when dragging
@@ -30,50 +31,42 @@ export default Ember.Component.extend({
 
   didInsertElement: function() {
     this.set('parentView.sash', this);
-    this.$().css("z-index", "9999");
-    this.$().css("position", "absolute");
-    this.$().css("opacity", this.get('opacity'));
-
-    this.updateWidth();
-    this.updatePosition();
-    this.updateOrientation();
+    this.updateWidthPercentage();
   },
 
-  updatePosition: function() {
-    if(this.get('isVertical')) {
-      this.$().css("left", (this.get('splitPercentage') - this.get('widthPercentage') / 2) + "%");
-    } else {
-      this.$().css("top", (this.get('splitPercentage') - this.get('widthPercentage') / 2) + "%");
-    }
-  }.observes('splitPercentage', 'widthPercentage', 'isVertical'),
+  style: function() {
+    var s = "z-index:9999; position:absolute; opacity:" + this.get('opacity') + ";";
 
-  updateWidth: function() {
+    if(this.get('isVertical')) {
+      s += "left:" + (this.get('splitPercentage') - this.get('widthPercentage') / 2);
+    } else {
+      s += "top:" + (this.get('splitPercentage') - this.get('widthPercentage') / 2);
+    }
+
+    s += "%; ";
+
+    if(this.get('isVertical')) {
+      s += "width:" + this.get('width') + "px; height:100%; cursor:ew-resize;";
+    } else {
+      s += "width:100%;" + "height:" + this.get('width') + "px; cursor:ns-resize;";
+    }
+
+    if(this.get('isDragging')) {
+      s += "background-color:" + this.get('sashBackgroundColor') + ";";
+    } else {
+      s += "background-color:transparent;";
+    }
+
+    return s;
+   }.property('opacity', 'splitPercentage', 'widthPercentage', 'isVertical', 'width', 'isDragging'),
+
+  updateWidthPercentage: function() {
     if(this.get('isVertical')) {
       this.set('widthPercentage', this.get('width') / this.get('parentView.width') * 100);
     } else {
       this.set('widthPercentage', this.get('width') / this.get('parentView.height') * 100);     
     }
   }.observes('isVertical', 'width', 'parentView.width', 'parentView.height'),
-
-  updateOrientation: function() {
-    if(this.get('isVertical')) {
-      this.$().width(this.get('width') + "px");
-      this.$().height("100%");
-      this.$().css("cursor", "ew-resize");
-    } else {
-      this.$().width("100%");
-      this.$().height(this.get('width') + "px");
-      this.$().css("cursor", "ns-resize");
-    }
-  }.observes('isVertical', 'width'),
-
-  updateBackground: function() {
-    if(this.get('parentView.isDragging')) {
-      this.$().css("background-color", this.get('sashBackgroundColor'));
-    } else {
-      this.$().css("background-color", "transparent");
-    }
-  }.observes('isDragging'),
 
   mouseDown: function(event) {
     this.set('isDragging', true);
