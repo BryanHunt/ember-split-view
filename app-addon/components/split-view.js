@@ -52,14 +52,12 @@ export default Ember.Component.extend({
 
   childViews: null,
   isDragging: false,
-  width: 0,
-  height: 0,
 
-  didInsertElement: function(){
+  didInsertElement: function() {
     this.set('parentView.childSplitView', this);
+    this.set('childViews', Ember.A());
     this.set('width', this.$().width());
     this.set('height', this.$().height());
-    this.set('childViews', Ember.A());
   },
 
   addChildView: function(child) {
@@ -86,14 +84,6 @@ export default Ember.Component.extend({
       rightOrBottom.set('movableSide', 'top');
     }
   }.observes('isVertical'),
-
-  updateWidth: function() {
-    this.$().width(this.get('width'));
-  }.observes('width'),
-
-  updateHeight: function() {
-    this.$().height(this.get('height'));
-  }.observes('height'),
 
   constrainSplit: function() {
     var leftOrTop = this.get('childViews').objectAt(0);

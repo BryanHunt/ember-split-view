@@ -50,8 +50,8 @@ export default Ember.Component.extend({
     var childSplit = this.get('childSplitView');
 
     if(childSplit) {
-      childSplit.set('width', this.$().width());
-      childSplit.set('height', this.$().height());
+      childSplit.set('width', "100%");
+      childSplit.set('height', "100%");
       window.console.log("updateChildSplitView  width: " + childSplit.get('width') + "  height: " + childSplit.get('height'));
     }
   }.observes('childSplitView', 'style')
