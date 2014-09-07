@@ -50,12 +50,11 @@ export default Ember.Component.extend({
    */
   splitPercentage: 50,
 
-  childViews: null,
+  childViews: [],
   isDragging: false,
 
   didInsertElement: function() {
     this.set('parentView.childSplitView', this);
-    this.set('childViews', Ember.A());
     this.set('width', this.$().width());
     this.set('height', this.$().height());
   },
@@ -66,6 +65,10 @@ export default Ember.Component.extend({
     if(this.get('childViews').length === 2) {
       this.updateOrientation();
     }
+  },
+
+  removeChildView: function(child) {
+    this.get('childViews').removeObject(child);
   },
 
   updateOrientation: function() {

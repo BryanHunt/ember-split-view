@@ -14,6 +14,10 @@ export default Ember.Component.extend({
     this.get('parentView').addChildView(this);
   },
 
+  willDestroyElement: function() {
+    this.get('parentView').removeChildView(this);    
+  },
+
   style: function() {
     var s = "position: absolute;";
 
@@ -52,7 +56,6 @@ export default Ember.Component.extend({
     if(childSplit) {
       childSplit.set('width', "100%");
       childSplit.set('height', "100%");
-      window.console.log("updateChildSplitView  width: " + childSplit.get('width') + "  height: " + childSplit.get('height'));
     }
   }.observes('childSplitView', 'style')
 });
