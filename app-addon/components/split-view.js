@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import SplitChild from './split-child';
 
 /**
  * This class represents a view that is split either vertically or horizontally.
@@ -50,30 +51,54 @@ export default Ember.Component.extend({
    */
   splitPercentage: 50,
 
-  childViews: [],
+  splits: null,
   isDragging: false,
+  attributeBindings: ['style'],
+
+  init: function() {
+    this._super();
+    this.set('splits', Ember.A());
+  },
 
   didInsertElement: function() {
     this.set('parentView.childSplitView', this);
-    this.set('width', this.$().width());
-    this.set('height', this.$().height());
+    var parentView = this.get('parentView');
+
+    if(!(parentView instanceof SplitChild)) {
+      this.set('width', this.$().width());
+      this.set('height', this.$().height());      
+    }
   },
 
-  addChildView: function(child) {
-    this.get('childViews').addObject(child);
+  addSplit: function(split) {
+    this.get('splits').addObject(split);
 
-    if(this.get('childViews').length === 2) {
+    if(this.get('splits').length === 2) {
       this.updateOrientation();
     }
   },
 
-  removeChildView: function(child) {
-    this.get('childViews').removeObject(child);
+  removeSplit: function(split) {
+    this.get('splits').removeObject(split);
   },
 
+  style: function() {
+    var s = "";
+
+    if(this.get('width')){
+      s += "width:" + this.get('width') + "px; ";
+    }
+
+    if(this.get('height')){
+      s += "height:" + this.get('height') + "px; ";
+    }
+
+    return s;
+  }.property('width', 'height'),
+
   updateOrientation: function() {
-    var leftOrTop = this.get('childViews').objectAt(0);
-    var rightOrBottom = this.get('childViews').objectAt(1);
+    var leftOrTop = this.get('splits').objectAt(0);
+    var rightOrBottom = this.get('splits').objectAt(1);
 
     if(this.get('isVertical')) {
       leftOrTop.set('fixedSide', 'left');
@@ -89,8 +114,8 @@ export default Ember.Component.extend({
   }.observes('isVertical'),
 
   constrainSplit: function() {
-    var leftOrTop = this.get('childViews').objectAt(0);
-    var rightOrBottom = this.get('childViews').objectAt(1);
+    var leftOrTop = this.get('splits').objectAt(0);
+    var rightOrBottom = this.get('splits').objectAt(1);
 
     if(leftOrTop) {
       var minLeftOrTopPercentage = this.minChildPercentage(leftOrTop);

@@ -11,11 +11,11 @@ export default Ember.Component.extend({
   movableSide: null,
 
   didInsertElement: function() {
-    this.get('parentView').addChildView(this);
+    this.get('parentView').addSplit(this);
   },
 
   willDestroyElement: function() {
-    this.get('parentView').removeChildView(this);    
+    this.get('parentView').removeSplit(this);    
   },
 
   style: function() {
@@ -54,8 +54,8 @@ export default Ember.Component.extend({
     var childSplit = this.get('childSplitView');
 
     if(childSplit) {
-      childSplit.set('width', "100%");
-      childSplit.set('height', "100%");
+      childSplit.set('width', this.$().width());
+      childSplit.set('height', this.$().height());
     }
-  }.observes('childSplitView', 'style')
+  }.observes('childSplitView', 'movablePercent')
 });
