@@ -12,6 +12,7 @@ export default Ember.Component.extend({
 
   didInsertElement: function() {
     this.get('parentView').addSplit(this);
+    Ember.run.scheduleOnce('afterRender', this, this.updateChildSplitView);
   },
 
   willDestroyElement: function() {
