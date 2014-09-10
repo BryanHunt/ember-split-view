@@ -25,11 +25,11 @@ import Ember from 'ember';
  * ```handlebars
  * {{#split-view isVertical=false}}
  *   {{#split-child}}
- *     Content of the left view here.
+ *     Content of the top view here.
  *   {{/split-child}}
  *   {{split-sash"}}
  *   {{#split-child}}
- *     Content of the right view here.
+ *     Content of the bottom view here.
  *   {{/split-child}}
  * {{/split-view}}
  * ```
