@@ -1,6 +1,7 @@
 {
   "name": "ember-split-view",
   "version": "0.3.0",
+  "description": "Easily create split views",
   "ember-addon": {
     "main": "lib/ember-split-view.js"
   },
