@@ -37,7 +37,7 @@ export default Ember.Component.extend({
     }
 
     return s;
-  }.property('isVertical', 'fixedSide', 'movablePercent'),
+  }.property('isVertical', 'fixedSide', 'movableSide', 'movablePercent'),
 
   movablePercent: function() {
     if(!this.get('movableSide')) {

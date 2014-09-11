@@ -132,7 +132,7 @@ export default Ember.Component.extend({
         this.set('splitPercentage', minRightOrBottomPercentage);
       }
     } 
-  }.observes('sash.widthPercentage'),
+  }.observes('sash.widthPercentage', 'width', 'height'),
 
   mouseUp: function() {
     this.set('isDragging', false);
@@ -160,9 +160,9 @@ export default Ember.Component.extend({
 
   minChildPercentage: function(view) {
     if(this.get('isVertical')) {
-      return parseInt(view.$().css("min-width")) / this.$().width() * 100 + this.get('sash.widthPercentage') / 2;
+      return parseInt(view.$().css("min-width")) / this.get('width') * 100 + this.get('sash.widthPercentage') / 2;
     } else {
-      return parseInt(view.$().css("min-height")) / this.$().height() * 100 + this.get('sash.widthPercentage') / 2;
+      return parseInt(view.$().css("min-height")) / this.get('height') * 100 + this.get('sash.widthPercentage') / 2;
     }
   }
 });
