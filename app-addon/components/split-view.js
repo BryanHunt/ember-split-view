@@ -93,7 +93,6 @@ export default Ember.Component.extend({
       s += "height:" + this.get('height') + "px; ";
     }
 
-    window.console.log("split-view.style()  " + s);
     return s;
   }.property('width', 'height'),
 
