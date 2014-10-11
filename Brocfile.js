@@ -1,27 +1,8 @@
 /* global require, module */
 
-var mergeTrees = require('broccoli-merge-trees');
+var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-var appTree  = mergeTrees(['app', 'app-addon'], { overwrite: true });
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-
-var app = new EmberApp({
-  name: require('./package.json').name,
-
-  trees: {
-    app: appTree
-  },
-
-  // for some large projects, you may want to uncomment this (for now)
-  es3Safe: true,
-
-  minifyCSS: {
-    enabled: true,
-    options: {}
-  },
-
-  getEnvJSON: require('./config/environment')
-});
+var app = new EmberAddon();
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

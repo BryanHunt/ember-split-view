@@ -1,7 +1,7 @@
 {
   "name": "ember-split-view",
-  "version": "0.5.0",
   "description": "EmberJS components for creating split views",
+  "version": "0.6.0",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -34,7 +34,6 @@
     "ember-addon"
   ],
   "ember-addon": {
-    "configPath": "tests/dummy/config",
-    "main": "lib/ember-split-view.js"
+    "configPath": "tests/dummy/config"
   }
 }
