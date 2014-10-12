@@ -1,4 +1,4 @@
-Ember Split View
+Ember Split View [![Build Status](https://travis-ci.org/BryanHunt/ember-split-view.svg?branch=master)](https://travis-ci.org/BryanHunt/ember-split-view)
 ================
 
 See it in action: http://bryanhunt.github.io/ember-split-view
