@@ -16,7 +16,7 @@ npm install --save-dev ember-split-view
 ### Examples
 Vertical SplitView example:
 
-```handlebars
+```
 {{#split-view isVertical=true}}
   {{#split-child}}
     Content of the left view here.
@@ -30,7 +30,7 @@ Vertical SplitView example:
 
 Horizontal SplitView example:
 
-```handlebars
+```
 {{#split-view isVertical=false}}
   {{#split-child}}
     Content of the top view here.
