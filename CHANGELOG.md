@@ -1,5 +1,9 @@
 # ember-split-view Changelog
 
+### 0.6.0
+
+* [ENHANCEMENT] Switched to latest ember-cli addon structure.
+
 ### 0.5.0
 
 * [ENHANCEMENT] Updated for ember-cli 0.1.1
