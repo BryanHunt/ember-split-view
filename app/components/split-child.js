@@ -26,9 +26,9 @@ export default Ember.Component.extend({
     var s = "position: absolute;";
 
     if(this.get('isVertical')) {
-      s += "height:100%;";
+      s += "top:0px;bottom:0px;";
     } else {
-      s += "width:100%;";
+      s += "left:0px;right:0px;";
     }
 
     if(this.get('fixedSide')) {
