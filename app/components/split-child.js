@@ -26,8 +26,10 @@ export default Ember.Component.extend({
     var s = "position: absolute;";
 
     if(this.get('isVertical')) {
+      // can't use height:100% as this wouldn't take account of padding and margins
       s += "top:0px;bottom:0px;";
     } else {
+      // can't use width:100% as this wouldn't take account of padding and margins
       s += "left:0px;right:0px;";
     }
 

@@ -67,6 +67,7 @@ export default Ember.Component.extend({
     Ember.run.schedule('afterRender', function() {
       var parentView = self.get('parentView');
       if(!(parentView instanceof SplitChild)) {
+        // must do this in afterRender so that the parent has calculated its width and height
         self.set('width', self.$().width());
         self.set('height', self.$().height());      
       }
