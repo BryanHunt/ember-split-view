@@ -159,10 +159,19 @@ export default Ember.Component.extend({
   },
 
   minChildPercentage: function(view) {
+    var cssInt = function(name) {
+      return parseInt(view.$().css(name));
+    }
     if(this.get('isVertical')) {
-      return parseInt(view.$().css("min-width")) / this.get('width') * 100 + this.get('sash.widthPercentage') / 2;
+      return (cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right")
+                                  + cssInt("border-left") + cssInt("border-right") 
+                                  + cssInt("margin-left") + cssInt("margin-right")) / this.get('width') * 100 
+              + this.get('sash.widthPercentage') / 2;
     } else {
-      return parseInt(view.$().css("min-height")) / this.get('height') * 100 + this.get('sash.widthPercentage') / 2;
+      return (cssInt("min-height") + cssInt("padding-top") + cssInt("padding-bottom")
+                                   + cssInt("border-top") + cssInt("border-bottom") 
+                                   + cssInt("margin-top") + cssInt("margin-bottom")) / this.get('height') * 100 
+             + this.get('sash.widthPercentage') / 2;
     }
   }
 });
