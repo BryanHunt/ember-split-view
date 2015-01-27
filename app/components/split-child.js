@@ -1,10 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNameBindings: ['isVertical:vertical:horizontal'],
+  classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
   sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
   isVertical: Ember.computed.alias('parentView.isVertical'),
+  isDragging: Ember.computed.alias('parentView.isDragging'),
   attributeBindings: ['style'],
 
   childSplitView: null,
