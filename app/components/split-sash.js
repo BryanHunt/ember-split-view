@@ -46,9 +46,11 @@ export default Ember.Component.extend({
     s += "%; ";
 
     if(this.get('isVertical')) {
-      s += "width:" + this.get('width') + "px; height:100%; cursor:ew-resize;";
+      // can't use height: 100% as that doesn't allow for padding, margins and borders
+      s += "width:" + this.get('width') + "px; top:0px;bottom:0px; cursor:ew-resize;";
     } else {
-      s += "width:100%;" + "height:" + this.get('width') + "px; cursor:ns-resize;";
+      // can't use width: 100% as that doesn't allow for padding, margins and borders
+      s += "left:0px;right:0px;" + "height:" + this.get('width') + "px; cursor:ns-resize;";
     }
 
     if(this.get('isDragging')) {

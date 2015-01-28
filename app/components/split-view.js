@@ -62,12 +62,16 @@ export default Ember.Component.extend({
 
   didInsertElement: function() {
     this.set('parentView.childSplitView', this);
-    var parentView = this.get('parentView');
+    var self = this;
 
-    if(!(parentView instanceof SplitChild)) {
-      this.set('width', this.$().width());
-      this.set('height', this.$().height());      
-    }
+    Ember.run.schedule('afterRender', function() {
+      var parentView = self.get('parentView');
+      if(!(parentView instanceof SplitChild)) {
+        // must do this in afterRender so that the parent has calculated its width and height
+        self.set('width', self.$().width());
+        self.set('height', self.$().height());      
+      }
+    });
   },
 
   addSplit: function(split) {
