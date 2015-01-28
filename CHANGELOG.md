@@ -1,5 +1,10 @@
 # ember-split-view Changelog
 
+### 0.7.0
+
+* [BUGFIX] Issue #8 Doesn't lay out correctly in container with position:absolute parent
+
+
 ### 0.6.0
 
 * [ENHANCEMENT] Switched to latest ember-cli addon structure.
