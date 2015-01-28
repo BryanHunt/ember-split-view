@@ -54,6 +54,7 @@ export default Ember.Component.extend({
   splits: null,
   isDragging: false,
   attributeBindings: ['style'],
+  classNames: ['split-view'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
 
   init: function() {

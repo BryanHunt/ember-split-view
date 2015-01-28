@@ -12,6 +12,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   width: 6,
   widthPercentage: null,
+  classNames: ['sash'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
   isVertical: Ember.computed.alias('parentView.isVertical'),
   isDragging: Ember.computed.alias('parentView.isDragging'),

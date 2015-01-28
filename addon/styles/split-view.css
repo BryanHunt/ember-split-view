@@ -28,17 +28,17 @@
 
 /* child pane */
 
-.split-view .split-child {
+.split-view .child {
 	position: absolute;
 	overflow: auto;
 }
 
-.split-view .split-child.vertical {
+.split-view .child.vertical {
 	top: 0px;
 	bottom: 0px;
 }
 
-.split-view .split-child.horizontal {
+.split-view .child.horizontal {
 	left: 0px;
 	right: 0px;
 }
