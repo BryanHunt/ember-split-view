@@ -2,7 +2,7 @@
 
 ### 0.7.0
 
-* [BUGFIX] Issue #8 Doesn't lay out correctly in container with position:absolute parent
+* [BUGFIX] Issue #9 Splitter is wrongly positioned when child panes have padding or margins
 
 
 ### 0.6.0
