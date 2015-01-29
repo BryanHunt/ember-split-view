@@ -14,8 +14,9 @@ export default Ember.Component.extend({
   movableSide: null,
 
   didInsertElement: function() {
-    if(this.get('parentView').addSplit) {
-      this.get('parentView').addSplit(this);
+    var parent = this.get('parentView');
+    if(parent.addSplit) {
+      parent.addSplit(this);
     }
 
     Ember.run.scheduleOnce('afterRender', this, this.updateChildSplitView);
