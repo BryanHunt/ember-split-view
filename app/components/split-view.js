@@ -70,10 +70,10 @@ export default Ember.Component.extend({
     }
 
     Ember.run.scheduleOnce('afterRender', this, function() {
+      // must do this in afterRender so that the parent has calculated its width and height
       if(!(parentView instanceof SplitChild)) {
-        // must do this in afterRender so that the parent has calculated its width and height
         this.set('width', this.$().width());
-        this.set('height', this.$().height());      
+        this.set('height', this.$().height());    
       }      
     });
   },

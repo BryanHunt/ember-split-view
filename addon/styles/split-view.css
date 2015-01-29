@@ -31,14 +31,13 @@
 .split-view .child {
 	position: absolute;
 	overflow: auto;
-}
-
-.split-view .child.vertical {
 	top: 0px;
 	bottom: 0px;
-}
-
-.split-view .child.horizontal {
 	left: 0px;
 	right: 0px;
+}
+
+.split-view .child.nested {
+	/* contains a nested split-view */
+	overflow: hidden;
 }
