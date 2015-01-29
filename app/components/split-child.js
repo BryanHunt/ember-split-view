@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
   sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
   isVertical: Ember.computed.alias('parentView.isVertical'),
+  isDragging: Ember.computed.alias('parentView.isDragging'),
   attributeBindings: ['style'],
 
   childSplitView: null,
@@ -23,13 +25,7 @@ export default Ember.Component.extend({
   },
 
   style: function() {
-    var s = "position: absolute;";
-
-    if(this.get('isVertical')) {
-      s += "height:100%;";
-    } else {
-      s += "width:100%;";
-    }
+    var s = "";
 
     if(this.get('fixedSide')) {
       s += this.get('fixedSide') + ":0px;"
@@ -40,7 +36,7 @@ export default Ember.Component.extend({
     }
 
     return s;
-  }.property('isVertical', 'fixedSide', 'movableSide', 'movablePercent'),
+  }.property('fixedSide', 'movableSide', 'movablePercent'),
 
   movablePercent: function() {
     if(!this.get('movableSide')) {
