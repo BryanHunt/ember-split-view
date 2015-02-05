@@ -12,22 +12,12 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   width: 6,
   widthPercentage: null,
+  classNames: ['sash'],
+  classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
   isVertical: Ember.computed.alias('parentView.isVertical'),
   isDragging: Ember.computed.alias('parentView.isDragging'),
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),  
   attributeBindings: ['style'],
-
-  /**
-   * @property {string} sashBackgroundColor - the color of the sash when dragging
-   * @default black
-   */
-  sashBackgroundColor: "black",
-
-    /**
-   * @property {number} sashOpacity - the background opacity of the sash when dragging
-   * @default 0.1
-   */
-  opacity: 0.1,
 
   didInsertElement: function() {
     this.set('parentView.sash', this);
@@ -35,7 +25,7 @@ export default Ember.Component.extend({
   },
 
   style: function() {
-    var s = "z-index:9999; position:absolute; opacity:" + this.get('opacity') + ";";
+    var s = "";
 
     if(this.get('isVertical')) {
       s += "left:" + (this.get('splitPercentage') - this.get('widthPercentage') / 2);
@@ -46,19 +36,13 @@ export default Ember.Component.extend({
     s += "%; ";
 
     if(this.get('isVertical')) {
-      s += "width:" + this.get('width') + "px; height:100%; cursor:ew-resize;";
+      s += "width:" + this.get('width') + "px;";
     } else {
-      s += "width:100%;" + "height:" + this.get('width') + "px; cursor:ns-resize;";
-    }
-
-    if(this.get('isDragging')) {
-      s += "background-color:" + this.get('sashBackgroundColor') + ";";
-    } else {
-      s += "background-color:transparent;";
+      s += "height:" + this.get('width') + "px;";
     }
 
     return s;
-   }.property('opacity', 'splitPercentage', 'widthPercentage', 'isVertical', 'width', 'isDragging'),
+   }.property('splitPercentage', 'widthPercentage', 'isVertical', 'width'),
 
   updateWidthPercentage: function() {
     if(this.get('isVertical')) {

@@ -1,0 +1,43 @@
+/* split-view */
+
+/* sash */
+
+.split-view .sash {
+	background-color: transparent;
+	z-index: 9999;
+	position: absolute;
+	opacity: 0.1;
+}
+
+.split-view .sash.dragging, 
+.split-view .sash:hover {
+	background-color: black;
+}
+
+.split-view .sash.vertical {
+	top: 0px;
+	bottom: 0px;
+	cursor: ew-resize;
+}
+
+.split-view .sash.horizontal {
+	left: 0px;
+	right: 0px;
+	cursor: ns-resize;
+}
+
+/* child pane */
+
+.split-view .child {
+	position: absolute;
+	overflow: auto;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+.split-view .child.nested {
+	/* contains a nested split-view */
+	overflow: hidden;
+}

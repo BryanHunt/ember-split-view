@@ -1,9 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['child'],
+  classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal', 'childSplitView:nested'],
   splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
   sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
   isVertical: Ember.computed.alias('parentView.isVertical'),
+  isDragging: Ember.computed.alias('parentView.isDragging'),
   attributeBindings: ['style'],
 
   childSplitView: null,
@@ -11,11 +14,10 @@ export default Ember.Component.extend({
   movableSide: null,
 
   didInsertElement: function() {
-    if(this.get('parentView').addSplit) {
-      this.get('parentView').addSplit(this);
+    var parent = this.get('parentView');
+    if(parent.addSplit) {
+      parent.addSplit(this);
     }
-
-    Ember.run.scheduleOnce('afterRender', this, this.updateChildSplitView);
   },
 
   willDestroyElement: function() {
@@ -23,24 +25,14 @@ export default Ember.Component.extend({
   },
 
   style: function() {
-    var s = "position: absolute;";
-
-    if(this.get('isVertical')) {
-      s += "height:100%;";
-    } else {
-      s += "width:100%;";
-    }
-
-    if(this.get('fixedSide')) {
-      s += this.get('fixedSide') + ":0px;"
-    }
+    var s = "";
 
     if(this.get('movableSide')) {
       s += this.get('movableSide') + ":" + this.get('movablePercent') + "%";
     }
 
     return s;
-  }.property('isVertical', 'fixedSide', 'movableSide', 'movablePercent'),
+  }.property('movableSide', 'movablePercent'),
 
   movablePercent: function() {
     if(!this.get('movableSide')) {
@@ -55,11 +47,15 @@ export default Ember.Component.extend({
   }.property('sashWidthPercentage', 'splitPercentage', 'movableSide'),
 
   updateChildSplitView: function() {
-    var childSplit = this.get('childSplitView');
 
-    if(childSplit) {
-      childSplit.set('width', this.$().width());
-      childSplit.set('height', this.$().height());
-    }
+    // must run afterRender so that the size has updated
+    Ember.run.scheduleOnce('afterRender', this, function() {
+      var childSplit = this.get('childSplitView');
+
+      if(childSplit) {
+        childSplit.set('width', this.$().width());
+        childSplit.set('height', this.$().height());
+      }
+    });
   }.observes('childSplitView', 'movablePercent')
 });
