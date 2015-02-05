@@ -21,27 +21,21 @@ pre {
 }
 
 .child {
-  border: solid;
-  border-width: 1px;
-  border-radius: 10px;
   padding: 10px;
   overflow: hidden;
-}
-
-.vertical {
-  min-width: 100px;  
-}
-
-.horizontal {
+  min-width: 100px;
   min-height: 100px;
 }
 
-.compositeRight {
-  min-width: 206px;
+.border {
+  border: solid;
+  border-width: 1px;
+  border-radius: 10px;
 }
 
-.compositeBottom {
-  min-height: 206px;
+.composite {
+  min-width: 220px;
+  min-height: 220px;
 }
 
 .intro {
