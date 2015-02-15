@@ -1,7 +1,7 @@
 Ember Split View [![Build Status](https://travis-ci.org/BryanHunt/ember-split-view.svg?branch=master)](https://travis-ci.org/BryanHunt/ember-split-view)
 ================
 
-See it in action: http://bryanhunt.github.io/split
+See it in action: http://bryanhunt.github.io/#/split
 
 There is a demo app in [tests/dummy](https://github.com/BryanHunt/ember-split-view/tree/master/tests/dummy).
 
