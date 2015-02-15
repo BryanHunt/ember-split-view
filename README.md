@@ -1,9 +1,9 @@
 Ember Split View [![Build Status](https://travis-ci.org/BryanHunt/ember-split-view.svg?branch=master)](https://travis-ci.org/BryanHunt/ember-split-view)
 ================
 
-See it in action: http://bryanhunt.github.io/ember-split-view
+See it in action: http://bryanhunt.github.io/split
 
-The demo app is here: https://github.com/BryanHunt/ember-split-view-demo
+There is a demo app in [tests/dummy](https://github.com/BryanHunt/ember-split-view/tree/master/tests/dummy).
 
 ### Installation
 
@@ -41,7 +41,7 @@ Horizontal SplitView example:
   {{/split-child}}
 {{/split-view}}
 ```
- 
+
 ### Donating
 
 All donations will support this project and keep the developer supplied with Reese's Minis.
