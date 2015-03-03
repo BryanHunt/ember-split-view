@@ -4,7 +4,7 @@
 
 .split-view .sash {
 	background-color: transparent;
-	z-index: 9999;
+	z-index: 10;
 	position: absolute;
 	opacity: 0.1;
 }
