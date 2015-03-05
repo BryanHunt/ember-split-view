@@ -1,5 +1,9 @@
 # ember-split-view Changelog
 
+### 0.8.0
+
+* [BUGFIX] Pull Issue #19 Having a high z-index is a bad practice
+
 ### 0.7.0
 
 * [BUGFIX] Issue #9 Splitter is wrongly positioned when child panes have padding or margins
