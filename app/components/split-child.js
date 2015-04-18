@@ -31,7 +31,7 @@ export default Ember.Component.extend({
       s += this.get('movableSide') + ":" + this.get('movablePercent') + "%";
     }
 
-    return s;
+    return s.htmlSafe();
   }.property('movableSide', 'movablePercent'),
 
   movablePercent: function() {

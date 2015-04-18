@@ -41,7 +41,7 @@ export default Ember.Component.extend({
       s += "height:" + this.get('width') + "px;";
     }
 
-    return s;
+    return s.htmlSafe();
    }.property('splitPercentage', 'widthPercentage', 'isVertical', 'width'),
 
   updateWidthPercentage: function() {

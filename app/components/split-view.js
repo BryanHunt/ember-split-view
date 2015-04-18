@@ -101,7 +101,7 @@ export default Ember.Component.extend({
       s += "height:" + this.get('height') + "px; ";
     }
 
-    return s;
+    return s.htmlSafe();
   }.property('width', 'height'),
 
   updateOrientation: function() {
