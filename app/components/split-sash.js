@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 /**
  * This view represents the divider between two views enclosed in a SplitView.
- * The sash can be dragged to change the size of one vew relative to the other 
+ * The sash can be dragged to change the size of one vew relative to the other
  * on either side of the sash.  The sash can be either horizontal or vertical.
  * The parentView of the sash must be a SplitView
  *
@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
   isVertical: Ember.computed.alias('parentView.isVertical'),
   isDragging: Ember.computed.alias('parentView.isDragging'),
-  splitPercentage: Ember.computed.alias('parentView.splitPercentage'),  
+  splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
   attributeBindings: ['style'],
 
   didInsertElement: function() {
@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     this.updateWidthPercentage();
   },
 
-  style: function() {
+  style: Ember.computed('splitPercentage', 'widthPercentage', 'isVertical', 'width', function() {
     var s = "";
 
     if(this.get('isVertical')) {
@@ -41,16 +41,16 @@ export default Ember.Component.extend({
       s += "height:" + this.get('width') + "px;";
     }
 
-    return s.htmlSafe();
-   }.property('splitPercentage', 'widthPercentage', 'isVertical', 'width'),
+    return Ember.String.htmlSafe(s);
+   }),
 
-  updateWidthPercentage: function() {
+  updateWidthPercentage: Ember.observer('isVertical', 'width', 'parentView.width', 'parentView.height', function() {
     if(this.get('isVertical')) {
       this.set('widthPercentage', this.get('width') / this.get('parentView.width') * 100);
     } else {
-      this.set('widthPercentage', this.get('width') / this.get('parentView.height') * 100);     
+      this.set('widthPercentage', this.get('width') / this.get('parentView.height') * 100);
     }
-  }.observes('isVertical', 'width', 'parentView.width', 'parentView.height'),
+  }),
 
   mouseDown: function(event) {
     this.set('isDragging', true);

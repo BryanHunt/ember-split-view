@@ -21,20 +21,20 @@ export default Ember.Component.extend({
   },
 
   willDestroyElement: function() {
-    this.get('parentView').removeSplit(this);    
+    this.get('parentView').removeSplit(this);
   },
 
-  style: function() {
+  style: Ember.computed('movableSide', 'movablePercent', function() {
     var s = "";
 
     if(this.get('movableSide')) {
       s += this.get('movableSide') + ":" + this.get('movablePercent') + "%";
     }
 
-    return s.htmlSafe();
-  }.property('movableSide', 'movablePercent'),
+    return Ember.String.htmlSafe(s);
+  }),
 
-  movablePercent: function() {
+  movablePercent: Ember.computed('sashWidthPercentage', 'splitPercentage', 'movableSide', function() {
     if(!this.get('movableSide')) {
       return;
     }
@@ -44,9 +44,9 @@ export default Ember.Component.extend({
     } else {
       return 100 - this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
     }
-  }.property('sashWidthPercentage', 'splitPercentage', 'movableSide'),
+  }),
 
-  updateChildSplitView: function() {
+  updateChildSplitView: Ember.observer('childSplitView', 'movablePercent', function() {
 
     // must run afterRender so that the size has updated
     Ember.run.scheduleOnce('afterRender', this, function() {
@@ -57,5 +57,5 @@ export default Ember.Component.extend({
         childSplit.set('height', this.$().height());
       }
     });
-  }.observes('childSplitView', 'movablePercent')
+  })
 });

@@ -1,8 +1,94 @@
 <h2 id='title'>Ember SplitView Demo</h2>
-{{bs-tabs contentBinding="tabsMeta"}}
-
 <div class="intro">
   Drag the sash between the views (boxes).
 </div>
 
-{{outlet}}
+{{#md-tabs selectedIndex=0 md-border-bottom='' class="tab-section"}}
+  {{#md-tabs-wrapper}}
+    {{#md-tab label='Vertical'}}
+      <md-tab-label>Vertical</md-tab-label>
+    {{/md-tab}}
+    {{#md-tab label='Horizontal'}}
+      <md-tab-label>Horizontal</md-tab-label>
+    {{/md-tab}}
+    {{#md-tab label='Vertical Composite'}}
+      <md-tab-label>Vertical Composite</md-tab-label>
+    {{/md-tab}}
+    {{#md-tab label='Horizontal Composite'}}
+      <md-tab-label>Horizontal Composite</md-tab-label>
+    {{/md-tab}}
+    {{#md-tab label='Composite'}}
+      <md-tab-label>Composite</md-tab-label>
+    {{/md-tab}}
+  {{/md-tabs-wrapper}}
+
+  {{#md-tabs-content-wrapper class="content"}}
+    {{#md-tab-content}}
+      <div class="demo-tab" style="padding: 25px; text-align: center;">
+        {{#split-view isVertical=true class="splitViewVertical"}}
+          {{#split-child class="border"}}
+            {{partial "ring"}}
+          {{/split-child}}
+          {{split-sash}}
+          {{#split-child class="border"}}
+            {{partial "yoda"}}
+          {{/split-child}}
+        {{/split-view}}
+      </div>
+    {{/md-tab-content}}
+    {{#md-tab-content}}
+      <div class="demo-tab" style="padding: 25px; text-align: center;">
+        {{#split-view isVertical=false class="splitViewHorizontal"}}
+          {{split-child class="border"}}
+          {{split-sash}}
+          {{split-child class="border"}}
+        {{/split-view}}
+      </div>
+    {{/md-tab-content}}
+    {{#md-tab-content}}
+      <div class="demo-tab" style="padding: 25px; text-align: center;">
+        {{#split-view isVertical=true class="splitViewVertical"}}
+          {{split-child class="border"}}
+          {{split-sash}}
+          {{#split-child class="composite"}}
+            {{#split-view isVertical=true}}
+              {{split-child class="border"}}
+              {{split-sash}}
+              {{split-child class="border"}}
+            {{/split-view}}
+          {{/split-child}}
+        {{/split-view}}
+      </div>
+    {{/md-tab-content}}
+    {{#md-tab-content}}
+      <div class="demo-tab" style="padding: 25px; text-align: center;">
+        {{#split-view isVertical=false class="splitViewHorizontal"}}
+          {{split-child class="border"}}
+          {{split-sash}}
+          {{#split-child class="composite"}}
+            {{#split-view isVertical=false}}
+              {{split-child class="border"}}
+              {{split-sash}}
+              {{split-child class="border"}}
+            {{/split-view}}
+          {{/split-child}}
+        {{/split-view}}
+      </div>
+    {{/md-tab-content}}
+    {{#md-tab-content}}
+      <div class="demo-tab" style="padding: 25px; text-align: center;">
+        {{#split-view isVertical=true splitPercentage=30 class="splitViewVertical"}}
+          {{split-child class="border"}}
+          {{split-sash}}
+          {{#split-child}}
+            {{#split-view isVertical=false}}
+              {{split-child class="border"}}
+              {{split-sash}}
+              {{split-child class="border"}}
+            {{/split-view}}
+          {{/split-child}}
+        {{/split-view}}
+      </div>
+    {{/md-tab-content}}
+  {{/md-tabs-content-wrapper}}
+ {{/md-tabs}}

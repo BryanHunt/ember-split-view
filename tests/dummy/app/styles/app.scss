@@ -1,3 +1,5 @@
+@import "ember-material-design";
+
 /* Put your CSS here */
 html, body {
     margin: 20px;
@@ -6,6 +8,14 @@ html, body {
 pre {
   border: none;
   background-color: inherit;
+}
+
+.tab-section {
+  height: 1200px;
+}
+
+.content {
+  height: 1000px;
 }
 
 .splitViewVertical {
