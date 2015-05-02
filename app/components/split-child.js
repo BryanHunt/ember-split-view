@@ -21,13 +21,18 @@ export default Ember.Component.extend({
 
   didInsertElement: function() {
     var parent = this.get('parentView');
+
     if(parent.addSplit) {
       parent.addSplit(this);
     }
   },
 
   willDestroyElement: function() {
-    this.get('parentView').removeSplit(this);
+    var parent = this.get('parentView');
+
+    if(parent.removeSplit) {
+      parent.removeSplit(this);
+    }
   },
 
   style: computed('movableSide', 'movablePercent', function() {
