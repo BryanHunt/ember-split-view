@@ -1,8 +1,15 @@
 # ember-split-view Changelog
 
+### 0.9.0
+
+* [BUGFIX] Issue #21 Ember 0.2.3 warns about unsafe style binding
+* [ENHANCEMENT] Updated for ember-cli 0.2.3
+* [ENHANCEMENT] Updated for ember 1.11.1
+* Code style improvements
+
 ### 0.8.0
 
-* [BUGFIX] Pull Issue #19 Having a high z-index is a bad practice
+* [BUGFIX] Issue #19 Having a high z-index is a bad practice
 
 ### 0.7.0
 
