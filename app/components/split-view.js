@@ -1,6 +1,10 @@
 import Ember from 'ember';
 import SplitChild from './split-child';
 
+var computed = Ember.computed;
+var observer = Ember.observer;
+var htmlSafe = Ember.String.htmlSafe;
+
 /**
  * This class represents a view that is split either vertically or horizontally.
  * The split view is composed of three child views: a left or top view, a sash
@@ -90,7 +94,7 @@ export default Ember.Component.extend({
     this.get('splits').removeObject(split);
   },
 
-  style: Ember.computed('width', 'height', function() {
+  style: computed('width', 'height', function() {
     var s = "";
 
     if(this.get('width')){
@@ -101,10 +105,10 @@ export default Ember.Component.extend({
       s += "height:" + this.get('height') + "px; ";
     }
 
-    return Ember.String.htmlSafe(s);
+    return htmlSafe(s);
   }),
 
-  updateOrientation: Ember.observer('isVertical', function() {
+  updateOrientation: observer('isVertical', function() {
     var leftOrTop = this.get('splits').objectAt(0);
     var rightOrBottom = this.get('splits').objectAt(1);
 
@@ -121,7 +125,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  constrainSplit: Ember.observer('sash.widthPercentage', 'width', 'height', function() {
+  constrainSplit: observer('sash.widthPercentage', 'width', 'height', function() {
     var leftOrTop = this.get('splits').objectAt(0);
     var rightOrBottom = this.get('splits').objectAt(1);
 
@@ -172,13 +176,13 @@ export default Ember.Component.extend({
     }
     if(this.get('isVertical')) {
       return (cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right")
-                                  + cssInt("border-left") + cssInt("border-right")
-                                  + cssInt("margin-left") + cssInt("margin-right")) / this.get('width') * 100
+                                  + cssInt("border-left")  + cssInt("border-right")
+                                  + cssInt("margin-left")  + cssInt("margin-right")) / this.get('width') * 100
               + this.get('sash.widthPercentage') / 2;
     } else {
       return (cssInt("min-height") + cssInt("padding-top") + cssInt("padding-bottom")
-                                   + cssInt("border-top") + cssInt("border-bottom")
-                                   + cssInt("margin-top") + cssInt("margin-bottom")) / this.get('height') * 100
+                                   + cssInt("border-top")  + cssInt("border-bottom")
+                                   + cssInt("margin-top")  + cssInt("margin-bottom")) / this.get('height') * 100
              + this.get('sash.widthPercentage') / 2;
     }
   }

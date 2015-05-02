@@ -1,13 +1,19 @@
 import Ember from 'ember';
 
+var computed = Ember.computed;
+var alias = computed.alias;
+var observer = Ember.observer;
+var htmlSafe = Ember.String.htmlSafe;
+
 export default Ember.Component.extend({
+  attributeBindings: ['style'],
   classNames: ['child'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal', 'childSplitView:nested'],
-  splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
-  sashWidthPercentage: Ember.computed.alias('parentView.sash.widthPercentage'),
-  isVertical: Ember.computed.alias('parentView.isVertical'),
-  isDragging: Ember.computed.alias('parentView.isDragging'),
-  attributeBindings: ['style'],
+
+  splitPercentage: alias('parentView.splitPercentage'),
+  sashWidthPercentage: alias('parentView.sash.widthPercentage'),
+  isVertical: alias('parentView.isVertical'),
+  isDragging: alias('parentView.isDragging'),
 
   childSplitView: null,
   fixedSide: null,
@@ -24,17 +30,17 @@ export default Ember.Component.extend({
     this.get('parentView').removeSplit(this);
   },
 
-  style: Ember.computed('movableSide', 'movablePercent', function() {
+  style: computed('movableSide', 'movablePercent', function() {
     var s = "";
 
     if(this.get('movableSide')) {
       s += this.get('movableSide') + ":" + this.get('movablePercent') + "%";
     }
 
-    return Ember.String.htmlSafe(s);
+    return htmlSafe(s);
   }),
 
-  movablePercent: Ember.computed('sashWidthPercentage', 'splitPercentage', 'movableSide', function() {
+  movablePercent: computed('sashWidthPercentage', 'splitPercentage', 'movableSide', function() {
     if(!this.get('movableSide')) {
       return;
     }
@@ -46,7 +52,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  updateChildSplitView: Ember.observer('childSplitView', 'movablePercent', function() {
+  updateChildSplitView: observer('childSplitView', 'movablePercent', function() {
 
     // must run afterRender so that the size has updated
     Ember.run.scheduleOnce('afterRender', this, function() {

@@ -1,5 +1,10 @@
 import Ember from 'ember';
 
+var computed = Ember.computed;
+var alias = computed.alias;
+var observer = Ember.observer;
+var htmlSafe = Ember.String.htmlSafe;
+
 /**
  * This view represents the divider between two views enclosed in a SplitView.
  * The sash can be dragged to change the size of one vew relative to the other
@@ -12,12 +17,14 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   width: 6,
   widthPercentage: null,
+
+  attributeBindings: ['style'],
   classNames: ['sash'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
-  isVertical: Ember.computed.alias('parentView.isVertical'),
-  isDragging: Ember.computed.alias('parentView.isDragging'),
-  splitPercentage: Ember.computed.alias('parentView.splitPercentage'),
-  attributeBindings: ['style'],
+
+  isVertical: alias('parentView.isVertical'),
+  isDragging: alias('parentView.isDragging'),
+  splitPercentage: alias('parentView.splitPercentage'),
 
   didInsertElement: function() {
     this.set('parentView.sash', this);
@@ -41,10 +48,10 @@ export default Ember.Component.extend({
       s += "height:" + this.get('width') + "px;";
     }
 
-    return Ember.String.htmlSafe(s);
+    return htmlSafe(s);
    }),
 
-  updateWidthPercentage: Ember.observer('isVertical', 'width', 'parentView.width', 'parentView.height', function() {
+  updateWidthPercentage: observer('isVertical', 'width', 'parentView.width', 'parentView.height', function() {
     if(this.get('isVertical')) {
       this.set('widthPercentage', this.get('width') / this.get('parentView.width') * 100);
     } else {
