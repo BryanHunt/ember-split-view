@@ -1,4 +1,4 @@
-@import "ember-material-design";
+@import "ember-paper";
 
 /* Put your CSS here */
 html, body {
@@ -16,6 +16,15 @@ pre {
 
 .content {
   height: 1000px;
+}
+
+.toolbar-item {
+  padding-left: 20px;
+}
+
+.demo-tab {
+  padding: 25px;
+  text-align: center;
 }
 
 .splitViewVertical {

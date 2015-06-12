@@ -1,0 +1,13 @@
+<div class="demo-tab">
+  {{#split-view isVertical=true splitPercentage=30 class="splitViewVertical"}}
+    {{split-child class="border"}}
+    {{split-sash}}
+    {{#split-child}}
+      {{#split-view isVertical=false}}
+        {{split-child class="border"}}
+        {{split-sash}}
+        {{split-child class="border"}}
+      {{/split-view}}
+    {{/split-child}}
+  {{/split-view}}
+</div>
