@@ -11,4 +11,5 @@ export default Router.map(function() {
   this.route('verticalComposite');
   this.route('horizontalComposite');
   this.route('composite');
+  this.route('collapsible');
 });

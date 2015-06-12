@@ -19,6 +19,14 @@ export default Ember.Component.extend({
   fixedSide: null,
   movableSide: null,
 
+  init: function() {
+    this._super();
+
+    Ember.run.schedule('afterRender', this, function() {
+      this.set('register-as', this); // register-as is a new property
+    });
+  },
+
   didInsertElement: function() {
     var parent = this.get('parentView');
 
@@ -68,5 +76,14 @@ export default Ember.Component.extend({
         childSplit.set('height', this.$().height());
       }
     });
-  })
+  }),
+
+  collapse: function() {
+    if(this.get('movableSide') === "left" || this.get('movableSide') === "top") {
+      this.set('splitPercentage', 100);
+    } else {
+      this.set('splitPercentage', 0);
+    }
+    this.get('parentView').constrainSplit();
+  }
 });
