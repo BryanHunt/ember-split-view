@@ -150,6 +150,10 @@ export default Ember.Component.extend({
     this.set('isDragging', false);
   },
 
+  mouseLeave: function() {
+    this.set('isDragging', false);
+  },
+
   mouseMove: function(event) {
     if(!this.get('isDragging')) {
       return;
