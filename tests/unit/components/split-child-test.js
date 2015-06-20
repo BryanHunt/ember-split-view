@@ -15,10 +15,11 @@ test('it renders', function(assert) {
 
   // creates the component instance
   var component;
-  
+  var self = this;
+
   Ember.run(function(){
-    component = this.subject();
-  }.bind(this));
+    component = self.subject();
+  });
 
   assert.equal(component._state, 'preRender');
 
