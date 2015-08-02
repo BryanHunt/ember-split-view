@@ -57,6 +57,7 @@ export default Ember.Component.extend({
 
   splits: null,
   isDragging: false,
+  isRoot: false,
   attributeBindings: ['style'],
   classNames: ['split-view'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
@@ -67,15 +68,18 @@ export default Ember.Component.extend({
   },
 
   didInsertElement: function() {
+    this._super.apply(this, arguments);
     var parentView = this.get('parentView');
 
-    if(parentView instanceof SplitChild) {
+    var isRoot = !(parentView instanceof SplitChild);
+    this.set('isRoot', isRoot);
+    if(!isRoot) {
       parentView.set('childSplitView', this);
     }
 
     Ember.run.scheduleOnce('afterRender', this, function() {
       // must do this in afterRender so that the parent has calculated its width and height
-      if(!(parentView instanceof SplitChild)) {
+      if(isRoot) {
         this.set('width', this.$().width());
         this.set('height', this.$().height());
       }
@@ -96,13 +100,15 @@ export default Ember.Component.extend({
 
   style: computed('width', 'height', function() {
     var s = "";
+    if (!this.get('isRoot'))
+    {
+      if(this.get('width')){
+        s += "width:" + this.get('width') + "px; ";
+      }
 
-    if(this.get('width')){
-      s += "width:" + this.get('width') + "px; ";
-    }
-
-    if(this.get('height')){
-      s += "height:" + this.get('height') + "px; ";
+      if(this.get('height')){
+        s += "height:" + this.get('height') + "px; ";
+      }
     }
 
     return htmlSafe(s);
