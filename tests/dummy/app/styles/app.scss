@@ -10,6 +10,17 @@ pre {
   background-color: inherit;
 }
 
+body > .ember-view {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
 .tab-section {
   height: 1200px;
 }
@@ -25,18 +36,23 @@ pre {
 .demo-tab {
   padding: 25px;
   text-align: center;
+  flex: 1;
 }
 
 .splitViewVertical {
-  width: 1000px;
-  height: 500px;
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .splitViewHorizontal {
-  width: 1000px;
-  height: 700px;
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .child {
