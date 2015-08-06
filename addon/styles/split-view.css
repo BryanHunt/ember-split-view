@@ -37,7 +37,12 @@
 	right: 0px;
 }
 
+.split-view .child .split-view {
+	position: relative;
+}
+
 .split-view .child.nested {
 	/* contains a nested split-view */
 	overflow: hidden;
+	padding: 0px;
 }

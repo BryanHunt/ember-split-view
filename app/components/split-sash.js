@@ -24,40 +24,36 @@ export default Ember.Component.extend({
 
   isVertical: alias('parentView.isVertical'),
   isDragging: alias('parentView.isDragging'),
-  splitPercentage: alias('parentView.splitPercentage'),
+  position: alias('parentView.splitPosition'),
 
   didInsertElement: function() {
-    this.set('parentView.sash', this);
-    this.updateWidthPercentage();
+    // run next to avoid changing the component during a render iteration
+    Ember.run.next(this, function() {
+      this.set('parentView.sash', this);
+    });
   },
 
-  style: Ember.computed('splitPercentage', 'widthPercentage', 'isVertical', 'width', function() {
+  style: Ember.computed('position', 'isVertical', 'width', function() {
     var s = "";
 
     if(this.get('isVertical')) {
-      s += "left:" + (this.get('splitPercentage') - this.get('widthPercentage') / 2);
+      s += "left:" + (this.get('position') - this.get('width') / 2);
     } else {
-      s += "top:" + (this.get('splitPercentage') - this.get('widthPercentage') / 2);
+      s += "top:" + (this.get('position') - this.get('width') / 2);
     }
 
-    s += "%; ";
+    s += "px; ";
 
     if(this.get('isVertical')) {
-      s += "width:" + this.get('width') + "px;";
+      s += "width:" + this.get('width');
     } else {
-      s += "height:" + this.get('width') + "px;";
+      s += "height:" + this.get('width');
     }
+
+    s += "px; ";
 
     return htmlSafe(s);
    }),
-
-  updateWidthPercentage: observer('isVertical', 'width', 'parentView.width', 'parentView.height', function() {
-    if(this.get('isVertical')) {
-      this.set('widthPercentage', this.get('width') / this.get('parentView.width') * 100);
-    } else {
-      this.set('widthPercentage', this.get('width') / this.get('parentView.height') * 100);
-    }
-  }),
 
   mouseDown: function(event) {
     this.set('isDragging', true);

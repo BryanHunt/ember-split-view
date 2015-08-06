@@ -50,10 +50,10 @@ export default Ember.Component.extend({
   isVertical: true,
 
   /**
-   * @property {Number} splitPercentage - the percentage of the split between 0 and 100
+   * @property {Number} splitPosition - the position of the split in pixels
    * @default 50
    */
-  splitPercentage: 50,
+  splitPosition: 250,
 
   splits: null,
   isDragging: false,
@@ -65,6 +65,10 @@ export default Ember.Component.extend({
   init: function() {
     this._super();
     this.set('splits', Ember.A());
+
+    this.get('resizeService').on('didResize', event => {
+      this.didResize();
+    });
   },
 
   didInsertElement: function() {
@@ -72,11 +76,13 @@ export default Ember.Component.extend({
     var parentView = this.get('parentView');
 
     var isRoot = !(parentView instanceof SplitChild);
-    this.set('isRoot', isRoot);
-    if(!isRoot) {
-      parentView.set('childSplitView', this);
-    }
-
+    // run next to avoid changing the component during a render iteration
+    Ember.run.next(this, function() {
+      this.set('isRoot', isRoot);
+      if(!isRoot) {
+        parentView.set('childSplitView', this);
+      }
+    });
     Ember.run.scheduleOnce('afterRender', this, function() {
       // must do this in afterRender so that the parent has calculated its width and height
       if(isRoot) {
@@ -84,6 +90,11 @@ export default Ember.Component.extend({
         this.set('height', this.$().height());
       }
     });
+  },
+
+  didResize: function() {
+    this.set('width', this.$().width());
+    this.set('height', this.$().height());
   },
 
   addSplit: function(split) {
@@ -131,23 +142,23 @@ export default Ember.Component.extend({
     }
   }),
 
-  constrainSplit: observer('sash.widthPercentage', 'width', 'height', function() {
+  constrainSplit: observer('sash.width', 'width', 'height', function() {
     var leftOrTop = this.get('splits').objectAt(0);
     var rightOrBottom = this.get('splits').objectAt(1);
 
     if(leftOrTop) {
-      var minLeftOrTopPercentage = this.minChildPercentage(leftOrTop);
+      var minLeftOrTopPosition = this.minChildSize(leftOrTop);
 
-      if(this.get('splitPercentage') < minLeftOrTopPercentage) {
-        this.set('splitPercentage', minLeftOrTopPercentage);
+      if(this.get('splitPosition') < minLeftOrTopPosition) {
+        this.set('splitPosition', minLeftOrTopPosition);
       }
     }
 
     if (rightOrBottom) {
-      var minRightOrBottomPercentage = 100 - this.minChildPercentage(rightOrBottom);
+      var minRightOrBottomPosition = this.get('width') - this.minChildSize(rightOrBottom);
 
-      if(this.get('splitPercentage') > minRightOrBottomPercentage) {
-        this.set('splitPercentage', minRightOrBottomPercentage);
+      if(this.get('splitPosition') > minRightOrBottomPosition) {
+        this.set('splitPosition', minRightOrBottomPosition);
       }
     }
   }),
@@ -165,35 +176,32 @@ export default Ember.Component.extend({
       return;
     }
 
-    var posInParent;
-    var percentage;
+    var position;
 
     if(this.get('isVertical')) {
-      posInParent = event.pageX - this.$().offset().left;
-      percentage = posInParent / this.$().width() * 100;
+      position = event.pageX - this.$().offset().left;
     } else {
-      posInParent = event.pageY - this.$().offset().top;
-      percentage = posInParent / this.$().height() * 100;
+      position = event.pageY - this.$().offset().top;
     }
 
-    this.set('splitPercentage', percentage);
+    this.set('splitPosition', position);
     this.constrainSplit();
   },
 
-  minChildPercentage: function(view) {
+  minChildSize: function(view) {
     var cssInt = function(name) {
       return parseInt(view.$().css(name));
     }
     if(this.get('isVertical')) {
-      return (cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right")
-                                  + cssInt("border-left")  + cssInt("border-right")
-                                  + cssInt("margin-left")  + cssInt("margin-right")) / this.get('width') * 100
-              + this.get('sash.widthPercentage') / 2;
+      return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right")
+                                 + cssInt("border-left")  + cssInt("border-right")
+                                 + cssInt("margin-left")  + cssInt("margin-right")
+              + this.get('sash.width') / 2;
     } else {
-      return (cssInt("min-height") + cssInt("padding-top") + cssInt("padding-bottom")
-                                   + cssInt("border-top")  + cssInt("border-bottom")
-                                   + cssInt("margin-top")  + cssInt("margin-bottom")) / this.get('height') * 100
-             + this.get('sash.widthPercentage') / 2;
+      return cssInt("min-height") + cssInt("padding-top") + cssInt("padding-bottom")
+                                  + cssInt("border-top")  + cssInt("border-bottom")
+                                  + cssInt("margin-top")  + cssInt("margin-bottom")
+             + this.get('sash.width') / 2;
     }
   }
 });

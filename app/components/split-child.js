@@ -11,7 +11,10 @@ export default Ember.Component.extend({
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal', 'childSplitView:nested'],
 
   splitPercentage: alias('parentView.splitPercentage'),
-  sashWidthPercentage: alias('parentView.sash.widthPercentage'),
+  splitPosition: alias('parentView.splitPosition'),
+  sashWidth: alias('parentView.sash.width'),
+  parentWidth: alias('parentView.width'),
+  parentHeight: alias('parentView.height'),
   isVertical: alias('parentView.isVertical'),
   isDragging: alias('parentView.isDragging'),
 
@@ -30,9 +33,12 @@ export default Ember.Component.extend({
   didInsertElement: function() {
     var parent = this.get('parentView');
 
-    if(parent.addSplit) {
-      parent.addSplit(this);
-    }
+    // run next to avoid changing the component during a render iteration
+    Ember.run.next(this, function() {
+      if(parent.addSplit) {
+        parent.addSplit(this);
+      }
+    });
   },
 
   willDestroyElement: function() {
@@ -43,29 +49,43 @@ export default Ember.Component.extend({
     }
   },
 
-  style: computed('movableSide', 'movablePercent', function() {
+  style: computed('movableSide', 'movablePixels', function() {
     var s = "";
 
     if(this.get('movableSide')) {
-      s += this.get('movableSide') + ":" + this.get('movablePercent') + "%";
+      s += this.get('movableSide') + ":" + this.get('movablePixels') + "px";
     }
 
     return htmlSafe(s);
   }),
 
-  movablePercent: computed('sashWidthPercentage', 'splitPercentage', 'movableSide', function() {
-    if(!this.get('movableSide')) {
+  parentSize: computed('movableSide', 'parentWidth', 'parentHeight', function() {
+    var movableSide = this.get('movableSide');
+    if(!movableSide) {
+      return 0;
+    }
+    return (movableSide === "left" || movableSide == "right") ? this.get('parentWidth') : this.get('parentHeight');
+  }),
+
+  movablePixels: computed('sashWidth', 'splitPosition', 'movableSide', 'parentSize', function() {
+    var movableSide = this.get('movableSide');
+    if(!movableSide) {
       return;
     }
 
-    if(this.get('movableSide') === "left" || this.get('movableSide') === "top") {
-      return this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
+    if(movableSide === "left" || movableSide === "top") {
+      return this.get('splitPosition') + this.get('sashWidth') / 2;
     } else {
-      return 100 - this.get('splitPercentage') + this.get('sashWidthPercentage') / 2;
+      var parentSize = this.get('parentSize');
+      if (!parentSize)
+      {
+        return 0;
+      }
+      return parentSize - this.get('splitPosition') + this.get('sashWidth') / 2;
     }
   }),
 
-  updateChildSplitView: observer('childSplitView', 'movablePercent', function() {
+  updateChildSplitView: observer('childSplitView', 'movablePixels', function() {
 
     // must run afterRender so that the size has updated
     Ember.run.scheduleOnce('afterRender', this, function() {
@@ -80,9 +100,9 @@ export default Ember.Component.extend({
 
   collapse: function() {
     if(this.get('movableSide') === "left" || this.get('movableSide') === "top") {
-      this.set('splitPercentage', 100);
+      this.set('splitPosition', this.get('parentSize'));
     } else {
-      this.set('splitPercentage', 0);
+      this.set('splitPosition', 0);
     }
     this.get('parentView').constrainSplit();
   }
