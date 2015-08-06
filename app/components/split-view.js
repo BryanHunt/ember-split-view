@@ -142,25 +142,37 @@ export default Ember.Component.extend({
     }
   }),
 
-  constrainSplit: observer('sash.width', 'width', 'height', function() {
+  constrainSplit: observer('sash.width', 'width', 'height', 'isVertical', function() {
     var leftOrTop = this.get('splits').objectAt(0);
     var rightOrBottom = this.get('splits').objectAt(1);
 
     if(leftOrTop) {
-      var minLeftOrTopPosition = this.minChildSize(leftOrTop);
+      var minLeftOrTopPosition = leftOrTop.get('minSize');
 
       if(this.get('splitPosition') < minLeftOrTopPosition) {
         this.set('splitPosition', minLeftOrTopPosition);
       }
     }
 
+    var size = this.get('isVertical') ? this.get('width') : this.get('height');
     if (rightOrBottom) {
-      var minRightOrBottomPosition = this.get('width') - this.minChildSize(rightOrBottom);
+      var minRightOrBottomPosition = size - rightOrBottom.get('minSize');
 
       if(this.get('splitPosition') > minRightOrBottomPosition) {
         this.set('splitPosition', minRightOrBottomPosition);
       }
     }
+  }),
+
+  minSize: computed('splits.@each.minSize', 'sash.width', function() {
+    var result = 0;
+    var children = this.get('splits');
+    for(var i=0; i < children.length; i++)
+    {
+      result += children[i].get('minSize');
+    }
+    result += (children.length-1) * this.get('sash.width');
+    return result;
   }),
 
   mouseUp: function() {
@@ -186,22 +198,6 @@ export default Ember.Component.extend({
 
     this.set('splitPosition', position);
     this.constrainSplit();
-  },
-
-  minChildSize: function(view) {
-    var cssInt = function(name) {
-      return parseInt(view.$().css(name));
-    }
-    if(this.get('isVertical')) {
-      return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right")
-                                 + cssInt("border-left")  + cssInt("border-right")
-                                 + cssInt("margin-left")  + cssInt("margin-right")
-              + this.get('sash.width') / 2;
-    } else {
-      return cssInt("min-height") + cssInt("padding-top") + cssInt("padding-bottom")
-                                  + cssInt("border-top")  + cssInt("border-bottom")
-                                  + cssInt("margin-top")  + cssInt("margin-bottom")
-             + this.get('sash.width') / 2;
-    }
   }
+
 });

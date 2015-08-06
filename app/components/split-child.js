@@ -105,5 +105,29 @@ export default Ember.Component.extend({
       this.set('splitPosition', 0);
     }
     this.get('parentView').constrainSplit();
-  }
+  },
+
+  minSize: computed('isVertical', 'childSplitView.minSize', function() {
+    var childSplitView = this.get('childSplitView');
+    if (childSplitView)
+    {
+      return childSplitView.get('minSize');
+    }
+    var self = this;
+    var cssInt = function(name) {
+      return parseInt(self.$().css(name));
+    }
+    if(this.get('isVertical')) {
+      return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right")
+                                 + cssInt("border-left")  + cssInt("border-right")
+                                 + cssInt("margin-left")  + cssInt("margin-right")
+              + this.get('sashWidth') / 2;
+    } else {
+      return cssInt("min-height") + cssInt("padding-top") + cssInt("padding-bottom")
+                                  + cssInt("border-top")  + cssInt("border-bottom")
+                                  + cssInt("margin-top")  + cssInt("margin-bottom")
+             + this.get('sashWidth') / 2;
+    }
+  })
+
 });
