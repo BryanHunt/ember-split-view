@@ -58,6 +58,7 @@ export default Ember.Component.extend({
   splits: null,
   isDragging: false,
   isRoot: false,
+  attributeBindings: ['style'],
   classNames: ['split-view'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
 
@@ -113,6 +114,25 @@ export default Ember.Component.extend({
     this.set('height', this.$().height());
     this.constrainSplit();
   },
+
+  style: function() {
+    if (this.get('isRoot')) {
+      // let the DOM know our minimum size
+      var isVertical = this.get('isVertical');
+      var size = this.get('minSize');
+      var result = '';
+      if (isVertical) {
+        result = 'min-width:';
+      }
+      else {
+        result = 'min-height:';
+      }
+      return htmlSafe(result+size+'px;');
+    }
+    else {
+      return htmlSafe("");
+    }
+  }.property('isVertical', 'minSize'),
 
   addSplit: function(split) {
     this.get('splits').addObject(split);
