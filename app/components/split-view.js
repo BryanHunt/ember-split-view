@@ -76,15 +76,22 @@ export default Ember.Component.extend({
     // run next to avoid changing the component during a render iteration
     Ember.run.next(this, function() {
       this.set('isRoot', isRoot);
+      var resizeService = this.get('resizeService');
       if(!isRoot) {
         parentView.set('childSplitView', this);
-        this.get('resizeService').off('didResize', this, this.didResize);
+        if (resizeService)
+        {
+          resizeService.off('didResize', this, this.didResize);
+        }
       }
       else
       {
         // only need width and height on root split-view
         // split-child passes it down the tree for nested ones
-        this.get('resizeService').on('didResize', this, this.didResize);
+        if (resizeService)
+        {
+          resizeService.on('didResize', this, this.didResize);
+        }
       }
         Ember.run.scheduleOnce('afterRender', this, function() {
           // must do this in afterRender so that the parent has calculated its width and height
@@ -95,7 +102,10 @@ export default Ember.Component.extend({
   },
 
   willDestroyElement: function() {
-    this.get('resizeService').off('didResize', this, this.didResize);
+    var resizeService = this.get('resizeService');
+    if (resizeService) {
+      this.get('resizeService').off('didResize', this, this.didResize);
+    }
   },
 
   didResize: function() {
