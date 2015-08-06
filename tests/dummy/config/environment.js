@@ -20,6 +20,13 @@ module.exports = function(environment) {
       'img-src': "'self'"
     },
 
+    resizeServiceDefaults: {
+      debounceTimeout    : 200,
+      heightSensitive    : true,
+      widthSensitive     : true,
+      injectionFactories : [ 'view', 'component']
+    },
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created

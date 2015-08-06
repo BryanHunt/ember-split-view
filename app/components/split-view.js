@@ -58,7 +58,6 @@ export default Ember.Component.extend({
   splits: null,
   isDragging: false,
   isRoot: false,
-  attributeBindings: ['style'],
   classNames: ['split-view'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
 
@@ -66,35 +65,43 @@ export default Ember.Component.extend({
     this._super();
     this.set('splits', Ember.A());
 
-    this.get('resizeService').on('didResize', event => {
-      this.didResize();
-    });
   },
 
   didInsertElement: function() {
     this._super.apply(this, arguments);
-    var parentView = this.get('parentView');
 
+    var parentView = this.get('parentView');
     var isRoot = !(parentView instanceof SplitChild);
+
     // run next to avoid changing the component during a render iteration
     Ember.run.next(this, function() {
       this.set('isRoot', isRoot);
       if(!isRoot) {
         parentView.set('childSplitView', this);
+        this.get('resizeService').off('didResize', this, this.didResize);
       }
-    });
-    Ember.run.scheduleOnce('afterRender', this, function() {
-      // must do this in afterRender so that the parent has calculated its width and height
-      if(isRoot) {
-        this.set('width', this.$().width());
-        this.set('height', this.$().height());
+      else
+      {
+        // only need width and height on root split-view
+        // split-child passes it down the tree for nested ones
+        this.get('resizeService').on('didResize', this, this.didResize);
       }
+        Ember.run.scheduleOnce('afterRender', this, function() {
+          // must do this in afterRender so that the parent has calculated its width and height
+          this.set('width', this.$().width());
+          this.set('height', this.$().height());
+        });
     });
+  },
+
+  willDestroyElement: function() {
+    this.get('resizeService').off('didResize', this, this.didResize);
   },
 
   didResize: function() {
     this.set('width', this.$().width());
     this.set('height', this.$().height());
+    this.constrainSplit();
   },
 
   addSplit: function(split) {
@@ -109,36 +116,16 @@ export default Ember.Component.extend({
     this.get('splits').removeObject(split);
   },
 
-  style: computed('width', 'height', function() {
-    var s = "";
-    if (!this.get('isRoot'))
-    {
-      if(this.get('width')){
-        s += "width:" + this.get('width') + "px; ";
-      }
-
-      if(this.get('height')){
-        s += "height:" + this.get('height') + "px; ";
-      }
-    }
-
-    return htmlSafe(s);
-  }),
-
   updateOrientation: observer('isVertical', function() {
     var leftOrTop = this.get('splits').objectAt(0);
     var rightOrBottom = this.get('splits').objectAt(1);
 
     if(this.get('isVertical')) {
-      leftOrTop.set('fixedSide', 'left');
-      leftOrTop.set('movableSide', 'right');
-      rightOrBottom.set('fixedSide', 'right');
-      rightOrBottom.set('movableSide', 'left');
+      leftOrTop.set('anchorSide', 'right');
+      rightOrBottom.set('anchorSide', 'left');
     } else {
-      leftOrTop.set('fixedSide', 'top');
-      leftOrTop.set('movableSide', 'bottom');
-      rightOrBottom.set('fixedSide', 'bottom');
-      rightOrBottom.set('movableSide', 'top');
+      leftOrTop.set('anchorSide', 'bottom');
+      rightOrBottom.set('anchorSide', 'top');
     }
   }),
 
