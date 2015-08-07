@@ -65,7 +65,6 @@ export default Ember.Component.extend({
   init: function() {
     this._super();
     this.set('splits', Ember.A());
-
   },
 
   didInsertElement: function() {
@@ -115,7 +114,7 @@ export default Ember.Component.extend({
     this.constrainSplit();
   },
 
-  style: function() {
+  style: Ember.computed('isVertical', 'minSize', 'isRoot', function() {
     if (this.get('isRoot')) {
       // let the DOM know our minimum size
       var isVertical = this.get('isVertical');
@@ -132,7 +131,7 @@ export default Ember.Component.extend({
     else {
       return htmlSafe("");
     }
-  }.property('isVertical', 'minSize'),
+  }),
 
   addSplit: function(split) {
     this.get('splits').addObject(split);
