@@ -28,8 +28,12 @@ export default Ember.Component.extend({
 
   didInsertElement: function() {
     // run next to avoid changing the component during a render iteration
+    var parent = this.get('parentView');
     run.next(this, function() {
-      this.set('parentView.sash', this);
+      if (parent)
+      {
+        parent.set('sash', this);
+      }
     });
   },
 

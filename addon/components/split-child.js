@@ -33,7 +33,7 @@ export default Ember.Component.extend({
 
     // run next to avoid changing the component during a render iteration
     Ember.run.next(this, function() {
-      if(parent.addSplit) {
+      if(parent && parent.addSplit) {
         parent.addSplit(this);
       }
     });
@@ -42,7 +42,7 @@ export default Ember.Component.extend({
   willDestroyElement: function() {
     var parent = this.get('parentView');
 
-    if(parent.removeSplit) {
+    if(parent && parent.removeSplit) {
       parent.removeSplit(this);
     }
   },
