@@ -40,18 +40,22 @@ export default Ember.Component.extend({
   style: computed('position', 'isVertical', 'width', function() {
     var s = "";
 
-    if(this.get('isVertical')) {
-      s += "left:" + (this.get('position') - this.get('width') / 2);
+    var width = this.get('width');
+    var position = this.get('position');
+    var isVertical = this.get('isVertical');
+    
+    if(isVertical) {
+      s += "left:" + (position - width / 2);
     } else {
-      s += "top:" + (this.get('position') - this.get('width') / 2);
+      s += "top:" + (position - width/ 2);
     }
 
     s += "px; ";
 
-    if(this.get('isVertical')) {
-      s += "width:" + this.get('width');
+    if(isVertical) {
+      s += "width:" + width;
     } else {
-      s += "height:" + this.get('width');
+      s += "height:" + width;
     }
 
     s += "px; ";

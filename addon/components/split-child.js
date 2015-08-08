@@ -50,8 +50,9 @@ export default Ember.Component.extend({
   style: computed('anchorSide', 'anchorOffset', function() {
     var s = "";
 
-    if(this.get('anchorSide')) {
-      s += this.get('anchorSide') + ":" + this.get('anchorOffset') + "px";
+    var anchorSide = this.get('anchorSide');
+    if(anchorSide) {
+      s += anchorSide + ":" + this.get('anchorOffset') + "px";
     }
 
     return htmlSafe(s);
@@ -71,15 +72,17 @@ export default Ember.Component.extend({
       return;
     }
 
+    var sashWidth = this.get('sashWidth');
+    var splitPosition = this.get('splitPosition');
     if(anchorSide === "left" || anchorSide === "top") {
-      return this.get('splitPosition') + this.get('sashWidth') / 2;
+      return splitPosition + sashWidth / 2;
     } else {
       var parentSize = this.get('parentSize');
       if (!parentSize)
       {
         return 0;
       }
-      return parentSize - this.get('splitPosition') + this.get('sashWidth') / 2;
+      return parentSize - splitPosition + sashWidth / 2;
     }
   }),
 
@@ -89,9 +92,10 @@ export default Ember.Component.extend({
     Ember.run.scheduleOnce('afterRender', this, function() {
       var childSplitView = this.get('childSplitView');
 
+      var element = this.$();
       if(childSplitView) {
-        childSplitView.set('width', this.$().width());
-        childSplitView.set('height', this.$().height());
+        childSplitView.set('width', element.width());
+        childSplitView.set('height', element.height());
       }
     });
   }),
@@ -111,9 +115,9 @@ export default Ember.Component.extend({
     {
       return childSplitView.get('minSize');
     }
-    var self = this;
+    var css = this.$().css;
     var cssInt = function(name) {
-      return parseInt(self.$().css(name));
+      return parseInt(css(name));
     };
     if(this.get('isVertical')) {
       return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right") + 

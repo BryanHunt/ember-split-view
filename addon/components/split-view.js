@@ -95,8 +95,9 @@ export default Ember.Component.extend({
       }
         Ember.run.scheduleOnce('afterRender', this, function() {
           // must do this in afterRender so that the parent has calculated its width and height
-          this.set('width', this.$().width());
-          this.set('height', this.$().height());
+          var element = this.$();
+          this.set('width', element.width());
+          this.set('height', element.height());
         });
     });
   },
@@ -104,13 +105,14 @@ export default Ember.Component.extend({
   willDestroyElement: function() {
     var resizeService = this.get('resizeService');
     if (resizeService) {
-      this.get('resizeService').off('didResize', this, this.didResize);
+      resizeService.off('didResize', this, this.didResize);
     }
   },
 
   didResize: function() {
-    this.set('width', this.$().width());
-    this.set('height', this.$().height());
+    var element = this.$();
+    this.set('width', element.width());
+    this.set('height', element.height());
     this.constrainSplit();
   },
 
@@ -134,9 +136,10 @@ export default Ember.Component.extend({
   }),
 
   addSplit: function(split) {
-    this.get('splits').addObject(split);
+    var splits = this.get('splits');
+    splits.addObject(split);
 
-    if(this.get('splits').length === 2) {
+    if(splits.length === 2) {
       this.updateOrientation();
     }
   },
@@ -146,8 +149,9 @@ export default Ember.Component.extend({
   },
 
   updateOrientation: observer('isVertical', function() {
-    var leftOrTop = this.get('splits').objectAt(0);
-    var rightOrBottom = this.get('splits').objectAt(1);
+    var splits = this.get('splits');
+    var leftOrTop = splits.objectAt(0);
+    var rightOrBottom = splits.objectAt(1);
 
     if(this.get('isVertical')) {
       leftOrTop.set('anchorSide', 'right');
@@ -159,8 +163,9 @@ export default Ember.Component.extend({
   }),
 
   constrainSplit: observer('sash.width', 'width', 'height', 'isVertical', function() {
-    var leftOrTop = this.get('splits').objectAt(0);
-    var rightOrBottom = this.get('splits').objectAt(1);
+    var splits = this.get('splits');
+    var leftOrTop = splits.objectAt(0);
+    var rightOrBottom = splits.objectAt(1);
 
     if(leftOrTop) {
       var minLeftOrTopPosition = leftOrTop.get('minSize');
@@ -206,10 +211,11 @@ export default Ember.Component.extend({
 
     var position;
 
+    var offset = this.$().offset();
     if(this.get('isVertical')) {
-      position = event.pageX - this.$().offset().left;
+      position = event.pageX - offset.left;
     } else {
-      position = event.pageY - this.$().offset().top;
+      position = event.pageY - offset.top;
     }
 
     this.set('splitPosition', position);
