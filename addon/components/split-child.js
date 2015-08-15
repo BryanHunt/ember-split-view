@@ -49,16 +49,16 @@ export default Ember.Component.extend({
   _setStyle: function() {
     var anchorSide = this.get('anchorSide');
     var l,r,t,b = null;
-    if(anchorSide == 'left') {
+    if(anchorSide === 'left') {
       l = this.get('anchorOffset') + "px";
     }
-    else if(anchorSide == 'right') {
+    else if(anchorSide === 'right') {
       r = this.get('anchorOffset') + "px";
     }
-    else if(anchorSide == 'top') {
+    else if(anchorSide === 'top') {
       t = this.get('anchorOffset') + "px";
     }
-    else if(anchorSide == 'bottom') {
+    else if(anchorSide === 'bottom') {
       b = this.get('anchorOffset') + "px";
     }
     var style = this.get('element').style;
