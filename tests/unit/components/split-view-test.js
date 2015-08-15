@@ -5,7 +5,7 @@ import {
 
 moduleForComponent('split-view', 'SplitViewComponent', {
   // specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: []
 });
 
 test('it renders', function(assert) {
@@ -15,7 +15,7 @@ test('it renders', function(assert) {
   var component = this.subject();
   assert.equal(component._state, 'preRender');
 
-  // appends the component to the page
-  this.append();
+  this.render();
+  
   assert.equal(component._state, 'inDOM');
 });

@@ -13,6 +13,20 @@ module.exports = function(environment) {
       }
     },
 
+    contentSecurityPolicy: {
+      'script-src': "'self'",
+      'font-src': "'self' https://fonts.gstatic.com",
+      'style-src': "'self' https://fonts.googleapis.com ",
+      'img-src': "'self'"
+    },
+
+    resizeServiceDefaults: {
+      debounceTimeout    : 200,
+      heightSensitive    : true,
+      widthSensitive     : true,
+      injectionFactories : [ 'view', 'component']
+    },
+
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
