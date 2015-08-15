@@ -3,7 +3,6 @@ import SplitChild from './split-child';
 
 var computed = Ember.computed;
 var observer = Ember.observer;
-var htmlSafe = Ember.String.htmlSafe;
 
 /**
  * This class represents a view that is split either vertically or horizontally.
@@ -58,7 +57,6 @@ export default Ember.Component.extend({
   splits: null,
   isDragging: false,
   isRoot: false,
-  attributeBindings: ['style'],
   classNames: ['split-view'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
 
@@ -93,12 +91,15 @@ export default Ember.Component.extend({
           resizeService.on('didResize', this, this.didResize);
         }
       }
-        Ember.run.scheduleOnce('afterRender', this, function() {
-          // must do this in afterRender so that the parent has calculated its width and height
-          var element = this.$();
-          this.set('width', element.width());
-          this.set('height', element.height());
-        });
+      Ember.run.next(this, function() {
+        this._setStyle();
+      });
+      Ember.run.scheduleOnce('afterRender', this, function() {
+        // must do this in afterRender so that the parent has calculated its width and height
+        var element = this.$();
+        this.set('width', element.width());
+        this.set('height', element.height());
+      });
     });
   },
 
@@ -116,23 +117,29 @@ export default Ember.Component.extend({
     this.constrainSplit();
   },
 
-  style: Ember.computed('isVertical', 'minSize', 'isRoot', function() {
+  _setStyle: function() {
+    var style = this.get('element').style;
     if (this.get('isRoot')) {
       // let the DOM know our minimum size
       var isVertical = this.get('isVertical');
-      var size = this.get('minSize');
-      var result = '';
+      var size = this.get('minSize')+'px';
       if (isVertical) {
-        result = 'min-width:';
+        style.minWidth = size;
+        style.minHeight = null;
       }
       else {
-        result = 'min-height:';
+        style.minWidth = null;
+        style.minHeight = size;
       }
-      return htmlSafe(result+size+'px;');
     }
     else {
-      return htmlSafe("");
+      style.minWidth = null;
+      style.minHeight = null;
     }
+  },
+
+  styleChanged: observer('isVertical', 'minSize', 'isRoot', function() {
+    this._setStyle();
   }),
 
   addSplit: function(split) {

@@ -3,10 +3,8 @@ import Ember from 'ember';
 var computed = Ember.computed;
 var alias = computed.alias;
 var observer = Ember.observer;
-var htmlSafe = Ember.String.htmlSafe;
 
 export default Ember.Component.extend({
-  attributeBindings: ['style'],
   classNames: ['child'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal', 'childSplitView:nested'],
 
@@ -36,6 +34,7 @@ export default Ember.Component.extend({
       if(parent && parent.addSplit) {
         parent.addSplit(this);
       }
+      this._setStyle();
     });
   },
 
@@ -47,15 +46,30 @@ export default Ember.Component.extend({
     }
   },
 
-  style: computed('anchorSide', 'anchorOffset', function() {
-    var s = "";
-
+  _setStyle: function() {
     var anchorSide = this.get('anchorSide');
-    if(anchorSide) {
-      s += anchorSide + ":" + this.get('anchorOffset') + "px";
+    var l,r,t,b = null;
+    if(anchorSide == 'left') {
+      l = this.get('anchorOffset') + "px";
     }
+    else if(anchorSide == 'right') {
+      r = this.get('anchorOffset') + "px";
+    }
+    else if(anchorSide == 'top') {
+      t = this.get('anchorOffset') + "px";
+    }
+    else if(anchorSide == 'bottom') {
+      b = this.get('anchorOffset') + "px";
+    }
+    var style = this.get('element').style;
+    style.left = l;
+    style.right = r;
+    style.top = t;
+    style.bottom = b;
+  },
 
-    return htmlSafe(s);
+  styleChanged: observer('anchorSide', 'anchorOffset', function() {
+    this._setStyle();
   }),
 
   parentSize: computed('anchorSide', 'parentWidth', 'parentHeight', function() {

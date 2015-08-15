@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 var run = Ember.run;
 var computed = Ember.computed;
+var observer = Ember.observer;
 var alias = computed.alias;
-var htmlSafe = Ember.String.htmlSafe;
 
 /**
  * This view represents the divider between two views enclosed in a SplitView.
@@ -18,7 +18,6 @@ export default Ember.Component.extend({
   width: 6,
   widthPercentage: null,
 
-  attributeBindings: ['style'],
   classNames: ['sash'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
 
@@ -34,34 +33,37 @@ export default Ember.Component.extend({
       {
         parent.set('sash', this);
       }
+      this._setStyle();
     });
   },
 
-  style: computed('position', 'isVertical', 'width', function() {
-    var s = "";
-
+  _setStyle: function() {
     var width = this.get('width');
     var position = this.get('position');
     var isVertical = this.get('isVertical');
     
-    if(isVertical) {
-      s += "left:" + (position - width / 2);
-    } else {
-      s += "top:" + (position - width/ 2);
-    }
-
-    s += "px; ";
+    var style = this.get('element').style;
 
     if(isVertical) {
-      s += "width:" + width;
+      style.left = (position - width / 2) + 'px';
+      style.top = null;
     } else {
-      s += "height:" + width;
+      style.left = null;
+      style.top = (position - width / 2) + 'px';
     }
 
-    s += "px; ";
+    if(isVertical) {
+      style.width = width + 'px';
+      style.height = null;
+    } else {
+      style.width = null;
+      style.height = width + 'px';
+    }
+  },
 
-    return htmlSafe(s);
-   }),
+  style: observer('position', 'isVertical', 'width', function() {
+    this._setStyle();
+  }),
 
   mouseDown: function(event) {
     this.set('isDragging', true);
