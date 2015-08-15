@@ -115,10 +115,12 @@ export default Ember.Component.extend({
     {
       return childSplitView.get('minSize');
     }
+
     var element = this.$();
     var cssInt = function(name) {
       return parseInt(this.css(name));
     }.bind(element);
+    
     if(this.get('isVertical')) {
       return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right") + 
                                   cssInt("border-left")  + cssInt("border-right") + 
