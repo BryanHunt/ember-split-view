@@ -1,5 +1,12 @@
 # ember-split-view Changelog
 
+### 0.10.0
+
+* [ENHANCEMENT] Issue #29 Split by pixels not percent
+* [BUGFIX] Issue #14 Resizing window so that split conflicts with min-width makes sash overlap child view
+* [BUGFIX] Issue #25 Content security policy violations
+* [BUGFIX] Issue #27 split-view height doesn't update when browser size changes
+
 ### 0.9.0
 
 * [BUGFIX] Issue #21 Ember 0.2.3 warns about unsafe style binding
