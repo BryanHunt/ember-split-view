@@ -41,7 +41,7 @@
     "ember-addon"
   ],
   "dependencies": {
-    "ember-resize": "0.0.8",
+    "ember-resize": "0.0.10",
     "ember-cli-sass": "4.0.1",
     "ember-cli-babel": "^5.0.0"
   },
