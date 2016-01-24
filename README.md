@@ -18,6 +18,18 @@ If you are using ember-cli, you can install as an addon.
 ember install ember-split-view
 ```
 
+## Configuration
+
+You need to add the following to your `config/environment.js`:
+```javascript
+resizeServiceDefaults: {
+  debounceTimeout    : 200,
+  heightSensitive    : true,
+  widthSensitive     : true,
+  injectionFactories : [ 'view', 'component']
+},
+```
+
 ## Running
 
 * `ember server`
