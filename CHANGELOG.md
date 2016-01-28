@@ -1,5 +1,9 @@
 # ember-split-view Changelog
 
+### 0.11.0
+* [ENHANCEMENT] Issue #35 Upgrade to ember-resize 0.0.10
+* [ENHANCEMENT] Update for ember-cli 2.3.0-beta.1
+
 ### 0.10.0
 
 * [ENHANCEMENT] Issue #29 Split by pixels not percent
