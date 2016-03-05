@@ -1,3 +1,5 @@
+import wait from 'ember-test-helpers/wait';
+
 import {
   moduleForComponent,
   test
@@ -16,6 +18,7 @@ test('it renders', function(assert) {
   assert.equal(component._state, 'preRender');
 
   this.render();
-  
+
   assert.equal(component._state, 'inDOM');
+  return wait();
 });
