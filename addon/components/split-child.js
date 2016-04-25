@@ -89,14 +89,16 @@ export default Ember.Component.extend({
     var sashWidth = this.get('sashWidth');
     var splitPosition = this.get('splitPosition');
     if(anchorSide === "left" || anchorSide === "top") {
-      return splitPosition + sashWidth / 2;
+      // HACK: splitPosition is sometimes a string... cast by multiplying by 1
+      return (splitPosition * 1) + sashWidth / 2;
     } else {
       var parentSize = this.get('parentSize');
       if (!parentSize)
       {
         return 0;
       }
-      return parentSize - splitPosition + sashWidth / 2;
+      // HACK: splitPosition is sometimes a string... cast by multiplying by 1
+      return parentSize - (splitPosition * 1) + sashWidth / 2;
     }
   }),
 
@@ -134,10 +136,10 @@ export default Ember.Component.extend({
     var cssInt = function(name) {
       return parseInt(this.css(name));
     }.bind(element);
-    
+
     if(this.get('isVertical')) {
-      return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right") + 
-                                  cssInt("border-left")  + cssInt("border-right") + 
+      return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right") +
+                                  cssInt("border-left")  + cssInt("border-right") +
                                   cssInt("margin-left")  + cssInt("margin-right") +
                                   this.get('sashWidth') / 2;
     } else {
