@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import SplitChild from './split-child';
+import layout from 'ember-split-view/templates/components/split-view';
 
 var computed = Ember.computed;
 var observer = Ember.observer;
@@ -42,6 +43,7 @@ var observer = Ember.observer;
  * @extends Ember.Component
  */
 export default Ember.Component.extend({
+  layout: layout,
   /**
    * @property {boolean} isVertical - the orientation of the split: true = vertical, false = horizontal
    * @default true

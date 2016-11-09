@@ -19,19 +19,15 @@ export default Ember.Component.extend({
   widthPercentage: null,
 
   classNames: ['sash'],
-  classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
-
-  isVertical: alias('parentView.isVertical'),
-  isDragging: alias('parentView.isDragging'),
-  position: alias('parentView.splitPosition'),
+  classNameBindings: ['parent.isDragging:dragging', 'parent.isVertical:vertical:horizontal'],
 
   didInsertElement: function() {
     // run next to avoid changing the component during a render iteration
-    var parent = this.get('parentView');
+    var parent = this.get('parent');
     run.next(this, function() {
       if (parent)
       {
-        parent.set('sash', this);
+        this.set('parent.sash', this);
       }
       this._setStyle();
     });
@@ -39,10 +35,11 @@ export default Ember.Component.extend({
 
   _setStyle: function() {
     var width = this.get('width');
-    var position = this.get('position');
-    var isVertical = this.get('isVertical');
-    
+    var position = this.get('parent.splitPosition');
+    var isVertical = this.get('parent.isVertical');
+
     var style = this.get('element').style;
+
 
     if(isVertical) {
       style.left = (position - width / 2) + 'px';
@@ -61,12 +58,12 @@ export default Ember.Component.extend({
     }
   },
 
-  style: observer('position', 'isVertical', 'width', function() {
+  style: observer('parent.splitPosition', 'parent.isVertical', 'width', function() {
     this._setStyle();
   }),
 
   mouseDown: function(event) {
-    this.set('isDragging', true);
+    this.set('parent.isDragging', true);
     event.preventDefault();
   }
 });
