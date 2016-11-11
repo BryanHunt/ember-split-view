@@ -1,9 +1,6 @@
 import Ember from 'ember';
 
-var run = Ember.run;
-var computed = Ember.computed;
-var observer = Ember.observer;
-var alias = computed.alias;
+const { run, observer } = Ember;
 
 /**
  * This view represents the divider between two views enclosed in a SplitView.
@@ -21,49 +18,52 @@ export default Ember.Component.extend({
   classNames: ['sash'],
   classNameBindings: ['parent.isDragging:dragging', 'parent.isVertical:vertical:horizontal'],
 
-  didInsertElement: function() {
+  didInsertElement() {
+    this._super();
     // run next to avoid changing the component during a render iteration
-    var parent = this.get('parent');
-    run.next(this, function() {
-      if (parent)
-      {
+    const parent = this.get('parent');
+    run.next(this, () => {
+      if (parent) {
         this.set('parent.sash', this);
       }
       this._setStyle();
     });
   },
 
-  _setStyle: function() {
-    var width = this.get('width');
-    var position = this.get('parent.splitPosition');
-    var isVertical = this.get('parent.isVertical');
+  _setStyle() {
+    const width = this.get('width');
+    const position = this.get('parent.splitPosition');
+    const isVertical = this.get('parent.isVertical');
 
-    var style = this.get('element').style;
+    const style = this.get('element').style;
 
 
-    if(isVertical) {
-      style.left = (position - width / 2) + 'px';
+    if (isVertical) {
+      style.left = `${(position - width / 2)}px`;
       style.top = null;
     } else {
       style.left = null;
-      style.top = (position - width / 2) + 'px';
+      style.top = `${(position - width / 2)}px`;
     }
 
-    if(isVertical) {
-      style.width = width + 'px';
+    if (isVertical) {
+      style.width = `${width}px`;
       style.height = null;
     } else {
       style.width = null;
-      style.height = width + 'px';
+      style.height = `${width}px`;
     }
   },
 
-  style: observer('parent.splitPosition', 'parent.isVertical', 'width', function() {
-    this._setStyle();
-  }),
+  style: observer('parent.splitPosition', 'parent.isVertical', 'width',
+    function () {
+      this._setStyle();
+    }
+  ),
 
-  mouseDown: function(event) {
+  mouseDown(event) {
     this.set('parent.isDragging', true);
     event.preventDefault();
-  }
+  },
+
 });
