@@ -1,9 +1,11 @@
+/* eslint max-len: 0 */
+/* eslint new-cap: ["error", { "capIsNew": false }]*/
 import Ember from 'ember';
 import SplitChild from './split-child';
-import layout from 'ember-split-view/templates/components/split-view';
+import splitViewLayout from 'ember-split-view/templates/components/split-view';
 
-var computed = Ember.computed;
-var observer = Ember.observer;
+const { computed, observer } = Ember;
+
 
 /**
  * This class represents a view that is split either vertically or horizontally.
@@ -43,7 +45,7 @@ var observer = Ember.observer;
  * @extends Ember.Component
  */
 export default Ember.Component.extend({
-  layout: layout,
+  layout: splitViewLayout,
   /**
    * @property {boolean} isVertical - the orientation of the split: true = vertical, false = horizontal
    * @default true
@@ -62,166 +64,169 @@ export default Ember.Component.extend({
   classNames: ['split-view'],
   classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal'],
 
-  init: function() {
+  init() {
     this._super();
     this.set('splits', Ember.A());
   },
 
-  didInsertElement: function() {
-    this._super.apply(this, arguments);
+  didInsertElement(...args) {
+    this._super(...args);
 
-    var parentView = this.get('parentView');
-    var isRoot = !(parentView instanceof SplitChild);
+    const parentView = this.get('parentView');
+    const isRoot = !(parentView instanceof SplitChild);
 
     // run next to avoid changing the component during a render iteration
-    Ember.run.next(this, function() {
+    Ember.run.next(this, () => {
       this.set('isRoot', isRoot);
-      var resizeService = this.get('resizeService');
-      if(!isRoot) {
+      const resizeService = this.get('resizeService');
+
+      if (!isRoot) {
         parentView.set('childSplitView', this);
-        if (resizeService)
-        {
+        if (resizeService) {
           resizeService.off('didResize', this, this.didResize);
         }
-      }
-      else
-      {
+      } else {
         // only need width and height on root split-view
         // split-child passes it down the tree for nested ones
-        if (resizeService)
-        {
+        if (resizeService) {
           resizeService.on('didResize', this, this.didResize);
         }
       }
-      Ember.run.next(this, function() {
+      Ember.run.next(this, () => {
         this._setStyle();
       });
-      Ember.run.scheduleOnce('afterRender', this, function() {
+      Ember.run.scheduleOnce('afterRender', this, () => {
         // must do this in afterRender so that the parent has calculated its width and height
-        var element = this.$();
+        const element = this.$();
         this.set('width', element.width());
         this.set('height', element.height());
       });
     });
   },
 
-  willDestroyElement: function() {
-    var resizeService = this.get('resizeService');
+  willDestroyElement() {
+    this._super();
+    const resizeService = this.get('resizeService');
     if (resizeService) {
       resizeService.off('didResize', this, this.didResize);
     }
   },
 
-  didResize: function() {
-    var element = this.$();
+  didResize() {
+    const element = this.$();
     this.set('width', element.width());
     this.set('height', element.height());
     this.constrainSplit();
   },
 
-  _setStyle: function() {
-    var style = this.get('element').style;
+  _setStyle() {
+    const style = this.get('element').style;
     if (this.get('isRoot')) {
       // let the DOM know our minimum size
-      var isVertical = this.get('isVertical');
-      var size = this.get('minSize')+'px';
+      const isVertical = this.get('isVertical');
+      const size = `${this.get('minSize')}px`;
       if (isVertical) {
         style.minWidth = size;
         style.minHeight = null;
-      }
-      else {
+      } else {
         style.minWidth = null;
         style.minHeight = size;
       }
-    }
-    else {
+    } else {
       style.minWidth = null;
       style.minHeight = null;
     }
   },
 
-  styleChanged: observer('isVertical', 'minSize', 'isRoot', function() {
-    this._setStyle();
-  }),
+  styleChanged: observer('isVertical', 'minSize', 'isRoot',
+    function () {
+      this._setStyle();
+    }
+  ),
 
-  addSplit: function(split) {
-    var splits = this.get('splits');
+  addSplit(split) {
+    const splits = this.get('splits');
     splits.addObject(split);
 
-    if(splits.length === 2) {
+    if (splits.length === 2) {
       this.updateOrientation();
     }
   },
 
-  removeSplit: function(split) {
+  removeSplit(split) {
     this.get('splits').removeObject(split);
   },
 
-  updateOrientation: observer('isVertical', function() {
-    var splits = this.get('splits');
-    var leftOrTop = splits.objectAt(0);
-    var rightOrBottom = splits.objectAt(1);
+  updateOrientation: observer('isVertical',
+    function () {
+      const splits = this.get('splits');
+      const leftOrTop = splits.objectAt(0);
+      const rightOrBottom = splits.objectAt(1);
 
-    if(this.get('isVertical')) {
-      leftOrTop.set('anchorSide', 'right');
-      rightOrBottom.set('anchorSide', 'left');
-    } else {
-      leftOrTop.set('anchorSide', 'bottom');
-      rightOrBottom.set('anchorSide', 'top');
-    }
-  }),
-
-  constrainSplit: observer('sash.width', 'width', 'height', 'isVertical', function() {
-    var splits = this.get('splits');
-    var leftOrTop = splits.objectAt(0);
-    var rightOrBottom = splits.objectAt(1);
-
-    if(leftOrTop) {
-      var minLeftOrTopPosition = leftOrTop.get('minSize');
-
-      if(this.get('splitPosition') < minLeftOrTopPosition) {
-        this.set('splitPosition', minLeftOrTopPosition);
+      if (this.get('isVertical')) {
+        leftOrTop.set('anchorSide', 'right');
+        rightOrBottom.set('anchorSide', 'left');
+      } else {
+        leftOrTop.set('anchorSide', 'bottom');
+        rightOrBottom.set('anchorSide', 'top');
       }
     }
+  ),
 
-    var size = this.get('isVertical') ? this.get('width') : this.get('height');
-    if (rightOrBottom) {
-      var minRightOrBottomPosition = size - rightOrBottom.get('minSize');
+  constrainSplit: observer('sash.width', 'width', 'height', 'isVertical',
+    function () {
+      const splits = this.get('splits');
+      const leftOrTop = splits.objectAt(0);
+      const rightOrBottom = splits.objectAt(1);
 
-      if(this.get('splitPosition') > minRightOrBottomPosition) {
-        this.set('splitPosition', minRightOrBottomPosition);
+      if (leftOrTop) {
+        const minLeftOrTopPosition = leftOrTop.get('minSize');
+
+        if (this.get('splitPosition') < minLeftOrTopPosition) {
+          this.set('splitPosition', minLeftOrTopPosition);
+        }
+      }
+
+      const size = this.get('isVertical') ? this.get('width') : this.get('height');
+      if (rightOrBottom) {
+        const minRightOrBottomPosition = size - rightOrBottom.get('minSize');
+
+        if (this.get('splitPosition') > minRightOrBottomPosition) {
+          this.set('splitPosition', minRightOrBottomPosition);
+        }
       }
     }
-  }),
+  ),
 
-  minSize: computed('splits.@each.minSize', 'sash.width', function() {
-    var result = 0;
-    var children = this.get('splits');
-    for(var i=0; i < children.length; i++)
-    {
-      result += children[i].get('minSize');
+  minSize: computed('splits.@each.minSize', 'sash.width',
+    function () {
+      let result = 0;
+      const children = this.get('splits');
+      for (let i = 0; i < children.length; i += 1) {
+        result += children[i].get('minSize');
+      }
+      result += (children.length - 1) * this.get('sash.width');
+      return result;
     }
-    result += (children.length-1) * this.get('sash.width');
-    return result;
-  }),
+  ),
 
-  mouseUp: function() {
+  mouseUp() {
     this.set('isDragging', false);
   },
 
-  mouseLeave: function() {
+  mouseLeave() {
     this.set('isDragging', false);
   },
 
-  mouseMove: function(event) {
-    if(!this.get('isDragging')) {
+  mouseMove(event) {
+    if (!this.get('isDragging')) {
       return;
     }
 
-    var position;
+    let position = 0;
 
-    var offset = this.$().offset();
-    if(this.get('isVertical')) {
+    const offset = this.$().offset();
+    if (this.get('isVertical')) {
       position = event.pageX - offset.left;
     } else {
       position = event.pageY - offset.top;
@@ -229,6 +234,6 @@ export default Ember.Component.extend({
 
     this.set('splitPosition', position);
     this.constrainSplit();
-  }
+  },
 
 });
