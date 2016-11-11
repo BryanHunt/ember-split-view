@@ -1,13 +1,13 @@
 <div class="demo-tab">
-  {{#split-view isVertical=false class="splitViewHorizontal"}}
-    {{split-child class="border"}}
-    {{split-sash}}
-    {{#split-child class="composite"}}
-      {{#split-view isVertical=false}}
-        {{split-child class="border"}}
-        {{split-sash}}
-        {{split-child class="border"}}
+  {{#split-view isVertical=false class="splitViewHorizontal" as |split|}}
+    {{split.child class="border"}}
+    {{split.sash}}
+    {{#split.child class="composite"}}
+      {{#split-view isVertical=false as |split2|}}
+        {{split2.child class="border"}}
+        {{split2.sash}}
+        {{split2.child class="border"}}
       {{/split-view}}
-    {{/split-child}}
+    {{/split.child}}
   {{/split-view}}
 </div>

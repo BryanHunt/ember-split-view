@@ -1,13 +1,13 @@
 <div class="demo-tab">
-  {{#split-view isVertical=true class="splitViewVertical"}}
-    {{#split-child class="border" register-as=leftChild}}
+  {{#split-view isVertical=true class="splitViewVertical" as |split|}}
+    {{#split.child class="border" register-as=leftChild}}
       <button {{action 'collapseLeft'}}> Collapse Left </button>
       {{partial "ring"}}
-    {{/split-child}}
-    {{split-sash}}
-    {{#split-child class="border" register-as=rightChild}}
+    {{/split.child}}
+    {{split.sash}}
+    {{#split.child class="border" register-as=rightChild}}
       <button {{action 'collapseRight'}}> Collapse Right </button>
       {{partial "yoda"}}
-    {{/split-child}}
+    {{/split.child}}
   {{/split-view}}
 </div>
