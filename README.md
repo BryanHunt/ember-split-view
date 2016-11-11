@@ -39,28 +39,28 @@ resizeServiceDefaults: {
 Vertical SplitView example:
 
 ```
-{{#split-view isVertical=true}}
-  {{#split-child}}
+{{#split-view isVertical=true as |split| }}
+  {{#split.child}}
     Content of the left view here.
-  {{/split-child}}
-  {{split-sash}}
-  {{#split-child}}
+  {{/split.child}}
+  {{split.sash}}
+  {{#split.child}}
     Content of the right view here.
-  {{/split-child}}
+  {{/split.child}}
 {{/split-view}}
 ```
 
 Horizontal SplitView example:
 
 ```
-{{#split-view isVertical=false}}
-  {{#split-child}}
+{{#split-view isVertical=false as |split|}}
+  {{#split.child}}
     Content of the top view here.
-  {{/split-child}}
-  {{split-sash}}
-  {{#split-child}}
+  {{/split.child}}
+  {{split.sash}}
+  {{#split.child}}
     Content of the bottom view here.
-  {{/split-child}}
+  {{/split.child}}
 {{/split-view}}
 ```
 
