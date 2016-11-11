@@ -127,7 +127,8 @@ export default Ember.Component.extend({
 
     var element = this.$();
     var cssInt = function(name) {
-      return parseInt(this.css(name));
+      //fix firefox
+      return parseInt(this.css(name), 10) || 0;
     }.bind(element);
 
     if(this.get('parent.isVertical')) {
