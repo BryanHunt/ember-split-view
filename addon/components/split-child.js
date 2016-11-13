@@ -133,7 +133,7 @@ export default Ember.Component.extend({
     this.get('parent').constrainSplit();
   },
 
-  cssInt() {
+  cssInt(name) {
     return parseInt(this.$().css(name), 10) || 0;
   },
 
