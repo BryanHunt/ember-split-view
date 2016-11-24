@@ -1,19 +1,14 @@
 import Ember from 'ember';
+import layout from 'ember-split-view/templates/components/split-child';
 
 var computed = Ember.computed;
 var alias = computed.alias;
 var observer = Ember.observer;
 
 export default Ember.Component.extend({
+  layout: layout,
   classNames: ['child'],
-  classNameBindings: ['isDragging:dragging', 'isVertical:vertical:horizontal', 'childSplitView:nested'],
-
-  splitPosition: alias('parentView.splitPosition'),
-  sashWidth: alias('parentView.sash.width'),
-  parentWidth: alias('parentView.width'),
-  parentHeight: alias('parentView.height'),
-  isVertical: alias('parentView.isVertical'),
-  isDragging: alias('parentView.isDragging'),
+  classNameBindings: ['parent.isDragging:dragging', 'parent.isVertical:vertical:horizontal', 'childSplitView:nested'],
 
   childSplitView: null,
   anchorSide: null,
@@ -27,7 +22,7 @@ export default Ember.Component.extend({
   },
 
   didInsertElement: function() {
-    var parent = this.get('parentView');
+    var parent = this.get('parent');
 
     // run next to avoid changing the component during a render iteration
     Ember.run.next(this, function() {
@@ -39,7 +34,7 @@ export default Ember.Component.extend({
   },
 
   willDestroyElement: function() {
-    var parent = this.get('parentView');
+    var parent = this.get('parent');
 
     if(parent && parent.removeSplit) {
       parent.removeSplit(this);
@@ -72,22 +67,22 @@ export default Ember.Component.extend({
     this._setStyle();
   }),
 
-  parentSize: computed('anchorSide', 'parentWidth', 'parentHeight', function() {
+  parentSize: computed('anchorSide', 'parent.width', 'parent.height', function() {
     var anchorSide = this.get('anchorSide');
     if(!anchorSide) {
       return 0;
     }
-    return (anchorSide === "left" || anchorSide === "right") ? this.get('parentWidth') : this.get('parentHeight');
+    return (anchorSide === "left" || anchorSide === "right") ? this.get('parent.width') : this.get('parent.height');
   }),
 
-  anchorOffset: computed('sashWidth', 'splitPosition', 'anchorSide', 'parentSize', function() {
+  anchorOffset: computed('parent.sash.width', 'parent.splitPosition', 'anchorSide', 'parentSize', function() {
     var anchorSide = this.get('anchorSide');
     if(!anchorSide) {
       return;
     }
 
-    var sashWidth = this.get('sashWidth');
-    var splitPosition = this.get('splitPosition');
+    var sashWidth = this.get('parent.sash.width');
+    var splitPosition = this.get('parent.splitPosition');
     if(anchorSide === "left" || anchorSide === "top") {
       return splitPosition + sashWidth / 2;
     } else {
@@ -100,7 +95,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  updateChildSplitView: observer('childSplitView', 'anchorOffset', 'parentWidth', 'parentHeight', function() {
+  updateChildSplitView: observer('childSplitView', 'anchorOffset', 'parent.width', 'parent.height', function() {
 
     // must run afterRender so that the size has updated
     Ember.run.scheduleOnce('afterRender', this, function() {
@@ -116,14 +111,14 @@ export default Ember.Component.extend({
 
   collapse: function() {
     if(this.get('anchorSide') === "left" || this.get('anchorSide') === "top") {
-      this.set('splitPosition', this.get('parentSize'));
+      this.set('parent.splitPosition', this.get('parentSize'));
     } else {
-      this.set('splitPosition', 0);
+      this.set('parent.splitPosition', 0);
     }
-    this.get('parentView').constrainSplit();
+    this.get('parent').constrainSplit();
   },
 
-  minSize: computed('isVertical', 'childSplitView.minSize', function() {
+  minSize: computed('parent.isVertical', 'childSplitView.minSize', function() {
     var childSplitView = this.get('childSplitView');
     if (childSplitView)
     {
@@ -132,19 +127,20 @@ export default Ember.Component.extend({
 
     var element = this.$();
     var cssInt = function(name) {
-      return parseInt(this.css(name));
+      //fix firefox
+      return parseInt(this.css(name), 10) || 0;
     }.bind(element);
-    
-    if(this.get('isVertical')) {
-      return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right") + 
-                                  cssInt("border-left")  + cssInt("border-right") + 
+
+    if(this.get('parent.isVertical')) {
+      return cssInt("min-width") + cssInt("padding-left") + cssInt("padding-right") +
+                                  cssInt("border-left")  + cssInt("border-right") +
                                   cssInt("margin-left")  + cssInt("margin-right") +
-                                  this.get('sashWidth') / 2;
+                                  this.get('parent.sash.width') / 2;
     } else {
       return cssInt("min-height") + cssInt("padding-top") + cssInt("padding-bottom") +
                                     cssInt("border-top")  + cssInt("border-bottom") +
                                     cssInt("margin-top")  + cssInt("margin-bottom") +
-                                    this.get('sashWidth') / 2;
+                                    this.get('parent.sash.width') / 2;
     }
   })
 
