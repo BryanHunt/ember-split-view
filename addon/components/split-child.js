@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   classNameBindings: [
     'parent.isDragging:dragging',
     'parent.isVertical:vertical:horizontal',
-    'childSplitView:nested',
+    'childSplitView:nested'
   ],
 
   childSplitView: null,
@@ -174,6 +174,6 @@ export default Ember.Component.extend({
 
       return this.minSizeHorizontal();
     }
-  ),
+  )
 
 });

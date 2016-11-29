@@ -64,6 +64,6 @@ export default Ember.Component.extend({
   mouseDown(event) {
     this.set('parent.isDragging', true);
     event.preventDefault();
-  },
+  }
 
 });

@@ -234,6 +234,6 @@ export default Ember.Component.extend({
 
     this.set('splitPosition', position);
     this.constrainSplit();
-  },
+  }
 
 });
