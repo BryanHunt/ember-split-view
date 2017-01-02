@@ -2,25 +2,25 @@
 
 /* sash */
 
-.split-view .sash {
+.split-view .split-view-sash {
 	background-color: transparent;
 	z-index: 10;
 	position: absolute;
 	opacity: 0.1;
 }
 
-.split-view .sash.dragging, 
-.split-view .sash:hover {
+.split-view .split-view-sash.dragging,
+.split-view .splib-view-sash:hover {
 	background-color: black;
 }
 
-.split-view .sash.vertical {
+.split-view .split-view-sash.vertical {
 	top: 0px;
 	bottom: 0px;
 	cursor: ew-resize;
 }
 
-.split-view .sash.horizontal {
+.split-view .split-view-sash.horizontal {
 	left: 0px;
 	right: 0px;
 	cursor: ns-resize;
@@ -28,7 +28,7 @@
 
 /* child pane */
 
-.split-view .child {
+.split-view .split-view-child {
 	position: absolute;
 	overflow: auto;
 	top: 0px;
@@ -37,7 +37,7 @@
 	right: 0px;
 }
 
-.split-view .child .split-view {
+.split-view .split-view-child .split-view {
 	position: absolute;
     left: 0;
     right: 0;
@@ -45,7 +45,7 @@
     bottom: 0;
 }
 
-.split-view .child.nested {
+.split-view .split-view-child.nested {
 	/* contains a nested split-view */
 	overflow: hidden;
 	padding: 0px;

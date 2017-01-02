@@ -15,7 +15,7 @@ export default Ember.Component.extend({
   width: 6,
   widthPercentage: null,
 
-  classNames: ['sash'],
+  classNames: ['split-view-sash'],
   classNameBindings: ['parent.isDragging:dragging', 'parent.isVertical:vertical:horizontal'],
 
   didInsertElement() {
