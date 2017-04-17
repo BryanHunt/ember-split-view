@@ -1,7 +1,7 @@
 {
   "name": "ember-split-view",
   "description": "EmberJS components for creating split views",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "directories": {
     "doc": "doc",
     "test": "tests"
