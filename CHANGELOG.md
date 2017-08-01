@@ -1,5 +1,8 @@
 # ember-split-view Changelog
 
+### 1.0.1
+* PR #44 Updated ember-cli-sass to 6.0.0
+
 ### 1.0.0
 * [ENHANCEMENT] PR #38 Updated and adjusted this addons for run Ember.2.9
 ** This enhancement requires a change in your templates.  See the README for an example.

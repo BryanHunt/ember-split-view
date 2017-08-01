@@ -5,7 +5,7 @@ const { computed, observer } = Ember;
 
 export default Ember.Component.extend({
   layout: splitChildLayout,
-  classNames: ['child'],
+  classNames: ['split-view-child'],
   classNameBindings: [
     'parent.isDragging:dragging',
     'parent.isVertical:vertical:horizontal',
