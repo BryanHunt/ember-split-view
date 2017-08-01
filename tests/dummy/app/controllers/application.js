@@ -7,6 +7,6 @@ export default Ember.Controller.extend({
     Ember.Object.create({ title: "Vertical Composite", content: 'verticalComposite'}),
     Ember.Object.create({ title: "Horizontal Composite", content: 'horizontalComposite'}),
     Ember.Object.create({ title: "Composite", content: 'composite'}),
-    Ember.Object.create({ title: "Collapsible Panes", content: 'collapsiblePanes'}),
+    Ember.Object.create({ title: "Collapsible Panes", content: 'collapsiblePanes'})
   ])
 });
