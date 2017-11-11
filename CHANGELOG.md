@@ -1,5 +1,8 @@
 # ember-split-view Changelog
 
+### 1.1.0
+* Update EmberJS to 2.16.2
+
 ### 1.0.1
 * PR #44 Updated ember-cli-sass to 6.0.0
 
