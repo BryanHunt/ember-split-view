@@ -4,16 +4,16 @@
 </div>
 
 {{#paper-toolbar}}
-  <div class="md-toolbar-tools">
+  {{#paper-toolbar-tools}}
     {{#link-to "vertical" class="toolbar-item"}}Vertical{{/link-to}}
     {{#link-to "horizontal" class="toolbar-item"}}Horizontal{{/link-to}}
     {{#link-to "verticalComposite" class="toolbar-item"}}Vertical Composite{{/link-to}}
     {{#link-to "horizontalComposite" class="toolbar-item"}}Horizontal Composite{{/link-to}}
     {{#link-to "composite" class="toolbar-item"}}Composite{{/link-to}}
     {{#link-to "collapsible" class="toolbar-item"}}Collapsible{{/link-to}}
-  </div>
+  {{/paper-toolbar-tools}}
 {{/paper-toolbar}}
 
-{{#paper-content flex-layout="column" flex=true}}
+{{#paper-content class="content"}}
   {{outlet}}
 {{/paper-content}}

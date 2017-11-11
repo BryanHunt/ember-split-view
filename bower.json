@@ -1,6 +1,0 @@
-{
-  "name": "ember-split-view",
-  "dependencies": {
-    "hammerjs": "~2.0.6"
-  }
-}
