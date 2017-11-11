@@ -8,12 +8,6 @@ There is a demo app in [tests/dummy](https://github.com/BryanHunt/ember-split-vi
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
-
-If you are using ember-cli, you can install as an addon.
-
 ```
 ember install ember-split-view
 ```
@@ -29,11 +23,6 @@ resizeServiceDefaults: {
   injectionFactories : [ 'view', 'component']
 },
 ```
-
-## Running
-
-* `ember server`
-* Visit your app at http://localhost:4200.
 
 ### Examples
 Vertical SplitView example:
@@ -63,17 +52,6 @@ Horizontal SplitView example:
   {{/split.child}}
 {{/split-view}}
 ```
-
-## Running Tests
-
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
 
 ### Donating
 
