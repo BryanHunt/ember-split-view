@@ -1,10 +1,11 @@
 /* eslint max-len: 0 */
 /* eslint new-cap: ["error", { "capIsNew": false }]*/
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { next, scheduleOnce } from '@ember/runloop'
 import SplitChild from './split-child';
 import splitViewLayout from 'ember-split-view/templates/components/split-view';
-
-const { computed, observer } = Ember;
 
 
 /**
@@ -44,7 +45,7 @@ const { computed, observer } = Ember;
  * @cLass SplitViewComponent
  * @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   layout: splitViewLayout,
   /**
    * @property {boolean} isVertical - the orientation of the split: true = vertical, false = horizontal
@@ -66,7 +67,7 @@ export default Ember.Component.extend({
 
   init() {
     this._super();
-    this.set('splits', Ember.A());
+    this.set('splits', A());
   },
 
   didInsertElement(...args) {
@@ -76,7 +77,7 @@ export default Ember.Component.extend({
     const isRoot = !(parentView instanceof SplitChild);
 
     // run next to avoid changing the component during a render iteration
-    Ember.run.next(this, () => {
+    next(this, () => {
       this.set('isRoot', isRoot);
       const resizeService = this.get('resizeService');
 
@@ -92,10 +93,10 @@ export default Ember.Component.extend({
           resizeService.on('didResize', this, this.didResize);
         }
       }
-      Ember.run.next(this, () => {
+      next(this, () => {
         this._setStyle();
       });
-      Ember.run.scheduleOnce('afterRender', this, () => {
+      scheduleOnce('afterRender', this, () => {
         // must do this in afterRender so that the parent has calculated its width and height
         const element = this.$();
         this.set('width', element.width());

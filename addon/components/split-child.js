@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { schedule, next, scheduleOnce } from '@ember/runloop'
 import splitChildLayout from 'ember-split-view/templates/components/split-child';
 
-const { computed, observer } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   layout: splitChildLayout,
   classNames: ['split-view-child'],
   classNameBindings: [
@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   init() {
     this._super();
 
-    Ember.run.schedule('afterRender', this, () => {
+    schedule('afterRender', this, () => {
       this.set('register-as', this); // register-as is a new property
     });
   },
@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     const parent = this.get('parent');
 
     // run next to avoid changing the component during a render iteration
-    Ember.run.next(this, () => {
+    next(this, () => {
       if (parent && parent.addSplit) {
         parent.addSplit(this);
       }
@@ -71,7 +71,7 @@ export default Ember.Component.extend({
     }
   ),
 
-  parentSize: computed('anchorSide', 'parent.width', 'parent.height',
+  parentSize: computed('anchorSide', 'parent.{width,height}',
     function () {
       const anchorSide = this.get('anchorSide');
       if (!anchorSide) {
@@ -86,7 +86,7 @@ export default Ember.Component.extend({
     }
   ),
 
-  anchorOffset: computed('parent.sash.width', 'parent.splitPosition', 'anchorSide', 'parentSize',
+  anchorOffset: computed('parent.{sash.width,splitPosition}', 'anchorSide', 'parentSize',
     function () {
       const anchorSide = this.get('anchorSide');
 
@@ -112,7 +112,7 @@ export default Ember.Component.extend({
   updateChildSplitView: observer('childSplitView', 'anchorOffset', 'parent.width', 'parent.height',
     function () {
       // must run afterRender so that the size has updated
-      Ember.run.scheduleOnce('afterRender', this, () => {
+      scheduleOnce('afterRender', this, () => {
         const childSplitView = this.get('childSplitView');
 
         const element = this.$();

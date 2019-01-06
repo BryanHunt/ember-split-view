@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { observer } from '@ember/object';
+import { next } from '@ember/runloop'
 
-const { run, observer } = Ember;
 
 /**
  * This view represents the divider between two views enclosed in a SplitView.
@@ -11,7 +12,7 @@ const { run, observer } = Ember;
  * @cLass SplitSashComponent
  * @extends Ember.View
  */
-export default Ember.Component.extend({
+export default Component.extend({
   width: 6,
   widthPercentage: null,
 
@@ -22,7 +23,7 @@ export default Ember.Component.extend({
     this._super();
     // run next to avoid changing the component during a render iteration
     const parent = this.get('parent');
-    run.next(this, () => {
+    next(this, () => {
       if (parent) {
         this.set('parent.sash', this);
       }

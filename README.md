@@ -1,6 +1,3 @@
-# ember-split-view
-[![Build Status](https://travis-ci.org/BryanHunt/ember-split-view.svg?branch=master)](https://travis-ci.org/BryanHunt/ember-split-view)
-================
 
 See it in action: http://bryanhunt.github.io/#/split
 
@@ -58,3 +55,4 @@ Horizontal SplitView example:
 All donations will support this project and keep the developer supplied with Reese's Minis.
 
 [![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/BryanHunt/)
+
