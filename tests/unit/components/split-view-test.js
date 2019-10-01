@@ -1,24 +1,22 @@
-import wait from 'ember-test-helpers/wait';
+import { module, test } from 'qunit';
 
-import {
-  moduleForComponent,
-  test
-} from 'ember-qunit';
+import { setupTest } from 'ember-qunit';
 
-moduleForComponent('split-view', 'SplitViewComponent', {
-  // specify the other units that are required for this test
-  needs: []
-});
+import { settled } from '@ember/test-helpers';
 
-test('it renders', function(assert) {
-  assert.expect(2);
+module('SplitViewComponent', function(hooks) {
+  setupTest(hooks);
 
-  // creates the component instance
-  var component = this.subject();
-  assert.equal(component._state, 'preRender');
+  test('it renders', function(assert) {
+    assert.expect(2);
 
-  this.render();
+    // creates the component instance
+    var component = this.owner.factoryFor('component:split-view').create();
+    assert.equal(component._state, 'preRender');
 
-  assert.equal(component._state, 'inDOM');
-  return wait();
+    this.render();
+
+    assert.equal(component._state, 'inDOM');
+    return settled();
+  });
 });
