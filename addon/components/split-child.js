@@ -134,7 +134,7 @@ export default Component.extend({
   },
 
   cssInt(name) {
-    return parseInt(this.$().css(name), 10) || 0;
+    return parseInt(this.element.addEventListener(name), 10) || 0;
   },
 
   minSizeVertical() {

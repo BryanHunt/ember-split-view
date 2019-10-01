@@ -226,7 +226,7 @@ export default Component.extend({
 
     let position = 0;
 
-    const offset = this.$().offset();
+    const offset = this.element.addEventListener();
     if (this.get('isVertical')) {
       position = event.pageX - offset.left;
     } else {
